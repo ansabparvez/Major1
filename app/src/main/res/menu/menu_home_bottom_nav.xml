@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_home_sent"
+        android:icon="@drawable/selector_home_sent_messages"
+        android:title="Sent"/>
+
+    <item android:id="@+id/menu_home_received"
+        android:icon="@drawable/selector_home_received_messages"
+        android:title="Received"/>
+
+    <item android:id="@+id/menu_home_settings"
+        android:icon="@drawable/selector_home_settings"
+        android:title="Settings"/>
+
+
+
+</menu>
