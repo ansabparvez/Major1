@@ -19,11 +19,9 @@
        android:layout_height="wrap_content"
        app:menu="@menu/menu_home_bottom_nav"
        app:itemIconTint="@null"
+       app:itemIconSize="32dp"
        app:labelVisibilityMode="unlabeled"
-       android:backgroundTint="@null"
-       app:backgroundTint="@null"
-       android:stateListAnimator="@null"
-       android:foregroundTint="@null"
+       android:background="@color/color_bottom_nav_background"
        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

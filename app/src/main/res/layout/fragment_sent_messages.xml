@@ -6,7 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.SentMessagesFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_sentMsg_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/color_toolbar_text"
+        android:background="@color/color_toolbar_background"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
+        android:id="@+id/tv_sentMsg_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sent messages"
