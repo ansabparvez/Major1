@@ -32,7 +32,5 @@ class SentMessagesFragment : Fragment() {
         val toolbar : Toolbar? = rootView?.findViewById(R.id.toolbar_sentMsg_toolbar)
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.title = "Sent Messages"
-
-        rootView?.findViewById<TextView>(R.id.tv_sentMsg_text)?.text="sent changed"
     }
 }
