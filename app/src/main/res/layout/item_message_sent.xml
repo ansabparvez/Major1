@@ -3,30 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="15dp"
+    android:layout_marginStart="70dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:layout_marginEnd="70dp"
-    android:background="@drawable/shape_rect_clr_bkgnd"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/shape_rect_clr_primary"
     android:padding="10dp">
 
+
     <TextView
-        android:id="@+id/tv_msgRcv_message"
+        android:id="@+id/tv_msgSent_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="msg sdfsdfs  ffs dsfsdfdssss ss sss ss dsfd fdsdf fdsf ssfdsafdsf f f sdsfdfdsafds fsf sfs sdfsd f dff dfdfs re e dfgdfgfdd dfd fdsf"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_msgRcv_time"
+        android:id="@+id/tv_msgSent_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="11:45 am"
         android:textSize="12sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_msgRcv_message" />
+        app:layout_constraintTop_toBottomOf="@id/tv_msgSent_message" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

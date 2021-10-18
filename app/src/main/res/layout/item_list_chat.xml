@@ -24,10 +24,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="15/10/2021"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/text_sub_heading"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/tv_listChat_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_listChat_name"/>
 
     <TextView
         android:id="@+id/tv_listChat_message"

@@ -9,17 +9,17 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="color_background">#fffefe</color>
-    <color name="color_background_light">#eef2f2</color>
-    <color name="color_primary">#d01b29</color>
+    <color name="color_background_light">#f5f5f3</color>
+    <color name="color_primary">#CB202E</color>
     <color name="color_primary_dark">#7C1920</color>
 
     <color name="color_text_dark">#484949</color>
     <color name="color_text_light">#cececf</color>
 
     <color name="color_toolbar_text">#fffefe</color>
-    <color name="color_toolbar_background">#d01b29</color>
+    <color name="color_toolbar_background">#CB202E</color>
 
-    <color name="color_bottom_nav_background">#d01b29</color>
+    <color name="color_bottom_nav_background">#CB202E</color>
 
     <color name="text_heading">#000000</color>
     <color name="text_sub_heading">#878484</color>
