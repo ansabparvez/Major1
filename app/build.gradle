@@ -49,4 +49,9 @@ dependencies {
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:28.4.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+
+    //Country code selector
+    implementation 'com.hbb20:ccp:2.5.4'
 }
