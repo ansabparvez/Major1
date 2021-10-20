@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var intent = Intent(this, ChatActivity::class.java);
+        var intent = Intent(this, LoginActivity::class.java);
         startActivity(intent);
     }
 }
