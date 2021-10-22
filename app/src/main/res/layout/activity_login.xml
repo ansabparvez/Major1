@@ -27,10 +27,12 @@
         app:layout_constraintTop_toTopOf="@id/iv_login_topBackground" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_login_signInMethods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="-50dp"
+        android:visibility="visible"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:layout_constraintTop_toBottomOf="@id/iv_login_topBackground">
@@ -59,10 +61,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@color/color_background"
-                app:ccpDialog_textColor="@color/color_text_light"
+                app:ccpDialog_allowSearch="true"
+                app:ccpDialog_textColor="@color/color_text_dark"
                 app:ccp_autoDetectCountry="true"
                 app:ccp_autoDetectLanguage="true"
                 app:ccp_textSize="16sp"
+                app:ccp_defaultNameCode="in"
                 app:layout_constraintBottom_toBottomOf="@+id/ti_login_phoneTi"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ti_login_phoneTi" />
@@ -79,15 +83,16 @@
                 app:layout_constraintStart_toEndOf="@id/view_login_ccp"
                 app:layout_constraintTop_toBottomOf="@id/tv_login_login">
 
-
                 <EditText
-                    android:id="@+id/et_albumName"
+                    android:id="@+id/et_login_phoneNumb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_background"
                     android:hint="Phone Number"
+                    android:imeOptions="actionDone"
                     android:inputType="phone"
                     android:maxLines="1"
+                    android:textColor="@color/color_text_dark"
                     android:textColorHint="@color/color_text_light" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +118,7 @@
                 android:id="@+id/view_login_divider1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="40dp"
                 android:background="@color/color_background_light"
                 app:layout_constraintTop_toBottomOf="@id/btn_login_sendOTP" />
@@ -141,15 +146,104 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:paddingStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_login_orDivider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_login_submitOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="-50dp"
+        android:visibility="gone"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintTop_toBottomOf="@id/iv_login_topBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
+
+            <TextView
+                android:id="@+id/tv_login_enterOTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Enter OTP"
+                android:textAlignment="center"
+                android:textColor="@color/color_primary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_login_optSentNumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="OTP sent to"
+                android:textAlignment="center"
+                android:textColor="@color/text_sub_heading"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_login_enterOTP" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_login_otpTi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_background"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_login_optSentNumb">
+
+                <EditText
+                    android:id="@+id/et_login_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/color_background"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="OTP"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_text_dark"
+                    android:textColorHint="@color/color_text_light" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login_submitOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@color/color_primary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/color_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ti_login_otpTi" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
