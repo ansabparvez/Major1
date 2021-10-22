@@ -51,7 +51,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
 
-
     //Country code selector
     implementation 'com.hbb20:ccp:2.5.4'
+
+    //Toasty toast library
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 }
