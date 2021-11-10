@@ -1,10 +1,7 @@
 package com.devansab.major1.views.activities
 
-import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -22,7 +19,7 @@ import com.google.firebase.auth.*
 import com.hbb20.CountryCodePicker
 import es.dmoral.toasty.Toasty
 import java.util.concurrent.TimeUnit
-
+//eyJhbGciOiJSUzI1NiIsImtpZCI6IjE1MjU1NWEyMjM3MWYxMGY0ZTIyZjFhY2U3NjJmYzUwZmYzYmVlMGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWFqb3IxLTk5YTRjIiwiYXVkIjoibWFqb3IxLTk5YTRjIiwiYXV0aF90aW1lIjoxNjM1NDQxMjgxLCJ1c2VyX2lkIjoiQlpQeW1UaEFWaVNhYm9BZ3dDd0JzNjk5bnoyMyIsInN1YiI6IkJaUHltVGhBVmlTYWJvQWd3Q3dCczY5OW56MjMiLCJpYXQiOjE2MzU1MTcyMTQsImV4cCI6MTYzNTUyMDgxNCwicGhvbmVfbnVtYmVyIjoiKzkxMTIzNDU2Nzg5MCIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzkxMTIzNDU2Nzg5MCJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.YarHujc_ry-zcslIeX7BniBl8CGDvfEIzeIqw19jotfTq8tIbNNTqUnvkJWEGQGPmf2tcZRQxOxMXmLeTC3B_20XdS3mCeWd6radrvDFaIQqMOTj40iML1eLxm6TIlopVPQ6-zD7af3jYReVhGGFrqKNz8geVnoGHldYm1-fEIBpO_TsmGjMa8QyUxS9or58OtVIibIjy3Q9m6Koe-vo9EA-3MDw7UGNr2UfoPx-FAVs5yib-5QdLXxXkGxgwdfkOSEE64xKn88VDjBrsDRnir-cY3lsnGQN4Bsk4-xWKvm2f0uQdSe3bukdZblaq4NDxc1lUG2TaiNF80qmK4RqWA
 class LoginActivity : AppCompatActivity() {
 
     private var storedVerificationId: String? = null
@@ -56,12 +53,11 @@ class LoginActivity : AppCompatActivity() {
         for (i in 0..googleSignInBtn.childCount) {
             val child: View = googleSignInBtn.getChildAt(i)
             if (child is TextView) {
-                val textView = child as TextView
-                textView.text = "Sign In with Google"
-                textView.textSize = 16F
+                child.text = "Sign In with Google"
+                child.textSize = 16F
                 val dp15 = UnitConverter.dpToPx(this, 15);
                 val dp30 = UnitConverter.dpToPx(this, 35);
-                textView.setPadding(dp30, dp15, dp30, dp15);
+                child.setPadding(dp30, dp15, dp30, dp15);
                 break
             }
         }
@@ -147,6 +143,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 DebugLog.i(TAG, "login : after success}" )
 
+                val user = FirebaseAuth.getInstance();
+                user.getAccessToken(true).addOnSuccessListener {
+                    DebugLog.i("ansab", "token: "+it.token)
+                }
             }
             .addOnFailureListener {
                 DebugLog.i(TAG, "login error: in failure ${it.localizedMessage}" )
