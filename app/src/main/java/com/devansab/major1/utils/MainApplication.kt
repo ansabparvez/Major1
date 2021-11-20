@@ -9,31 +9,32 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainApplication : Application() {
 
-    private val requestQueue = Volley.newRequestQueue(applicationContext);
-
     override fun onCreate() {
         super.onCreate()
-
+        DebugLog.i("main application", "main application started");
+        instance = this
+        requestQueue = Volley.newRequestQueue(applicationContext)
         addAuthTokenChangeListener()
     }
 
     companion object{
-        private val instance = MainApplication()
-        fun getInstance() : MainApplication{
-            return instance
-        }
+        lateinit var instance : MainApplication
+        private set
+        private lateinit var requestQueue: RequestQueue
     }
 
-    public fun addToRequestQueue(request: JsonObjectRequest) {
-        requestQueue.add(request)
+    public fun getRequestQueue(): RequestQueue{
+        return requestQueue;
     }
 
-    private fun addAuthTokenChangeListener() {
+    public fun addAuthTokenChangeListener() {
+        DebugLog.i("main application", "adding token listener")
         val user = FirebaseAuth.getInstance().currentUser ?: return;
 
         FirebaseAuth.getInstance().addIdTokenListener(FirebaseAuth.IdTokenListener { it ->
             it.getAccessToken(true).addOnSuccessListener { res ->
                 val token = res.token
+                DebugLog.i("ansab", "token listener: $token")
                 SharedPrefManager.getInstance(this)?.setAuthToken(token);
             }
         })

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devansab.major1.MainViewModel
 import com.devansab.major1.R
 import com.devansab.major1.utils.DebugLog
+import com.devansab.major1.utils.MainApplication
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -22,19 +23,24 @@ class MainActivity : AppCompatActivity() {
 
         val user = FirebaseAuth.getInstance().currentUser;
         if (user == null) {
+            DebugLog.i(this, "user is null");
             val intent = Intent(this, LoginActivity::class.java);
             startActivity(intent);
             finish();
             return;
         }
-        
+        DebugLog.i(this, "user is not null");
+
         viewModel.isUserRegistered()
 
         viewModel.getRegisterUserLiveData().observe(this, Observer { isRegistered ->
             if (isRegistered) {
+                DebugLog.i(this, "user is registered");
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
+            }else{
+                DebugLog.i(this, "user is not registered");
             }
         })
 

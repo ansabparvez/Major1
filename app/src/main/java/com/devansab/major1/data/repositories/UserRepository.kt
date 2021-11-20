@@ -7,12 +7,13 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
 import com.google.firebase.auth.FirebaseAuth
 import java.util.HashMap
 
-class UserRepository(application: Application) {
+class UserRepository(val application: Application) {
 
     private val isUserRegisteredLiveData = MutableLiveData<Boolean>();
 
@@ -31,7 +32,13 @@ class UserRepository(application: Application) {
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
-
+                    DebugLog.i("ansab", response.toString())
+                    if (response.getBoolean("success")) {
+                        isUserRegisteredLiveData.value =
+                            response.getBoolean("registrationFinished")
+                    } else {
+                        isUserRegisteredLiveData.value = false
+                    }
                 },
                 Response.ErrorListener { }
             ) {
@@ -43,10 +50,10 @@ class UserRepository(application: Application) {
                     return params
                 }
             };
-        MainApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+        MainApplication.instance.getRequestQueue().add(jsonObjectRequest);
     }
 
-    public fun getRegisterUserLiveData() : LiveData<Boolean> {
+    public fun getRegisterUserLiveData(): LiveData<Boolean> {
         return isUserRegisteredLiveData
     }
 
