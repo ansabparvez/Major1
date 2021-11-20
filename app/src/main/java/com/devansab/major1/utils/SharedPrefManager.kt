@@ -7,25 +7,28 @@ import android.content.SharedPreferences
 class SharedPrefManager {
 
     companion object {
-        private var instance: SharedPreferences? = null;
+        private var sharedPreferences: SharedPreferences? = null;
+        private var instance : SharedPrefManager? = null;
         private var KEY_AUTH_TOKEN = "sharedPrefAuthToken"
 
-        fun getInstance(context: Context): SharedPreferences? {
-            if (instance == null)
-                instance = context.getSharedPreferences("Major1", MODE_PRIVATE);
+        fun getInstance(context: Context): SharedPrefManager? {
+            if (sharedPreferences == null || instance == null) {
+                instance = SharedPrefManager();
+                sharedPreferences = context.getSharedPreferences("Major1", MODE_PRIVATE);
+            }
             return instance;
         }
     }
 
     private fun SharedPrefManager() {}
 
-    public fun setAuthToken(token: String) {
-        if (instance == null)
+    public fun setAuthToken(token: String?) {
+        if (sharedPreferences == null)
             return
-        instance!!.edit().putString(KEY_AUTH_TOKEN, token).apply();
+        sharedPreferences!!.edit().putString(KEY_AUTH_TOKEN, token).apply();
     }
 
     public fun getAuthToken(): String? {
-        return instance?.getString(KEY_AUTH_TOKEN, null);
+        return sharedPreferences?.getString(KEY_AUTH_TOKEN, null);
     }
 }
