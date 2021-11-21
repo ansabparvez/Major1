@@ -23,8 +23,8 @@ class MainApplication : Application() {
         private lateinit var requestQueue: RequestQueue
     }
 
-    public fun getRequestQueue(): RequestQueue{
-        return requestQueue;
+    public fun addToRequestQueue(request: JsonObjectRequest){
+        requestQueue.add(request)
     }
 
     public fun addAuthTokenChangeListener() {
@@ -35,7 +35,7 @@ class MainApplication : Application() {
             it.getAccessToken(true).addOnSuccessListener { res ->
                 val token = res.token
                 DebugLog.i("ansab", "token listener: $token")
-                SharedPrefManager.getInstance(this)?.setAuthToken(token);
+                SharedPrefManager.getInstance(this).setAuthToken(token);
             }
         })
     }

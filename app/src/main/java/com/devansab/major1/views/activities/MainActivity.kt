@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.devansab.major1.MainViewModel
+import com.devansab.major1.viewmodles.MainViewModel
 import com.devansab.major1.R
 import com.devansab.major1.utils.DebugLog
-import com.devansab.major1.utils.MainApplication
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isUserRegistered()
 
-        viewModel.getRegisterUserLiveData().observe(this, Observer { isRegistered ->
+        viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
             if (isRegistered) {
                 DebugLog.i(this, "user is registered");
                 val intent = Intent(this, HomeActivity::class.java)
