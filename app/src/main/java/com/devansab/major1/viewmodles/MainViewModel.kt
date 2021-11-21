@@ -1,4 +1,4 @@
-package com.devansab.major1
+package com.devansab.major1.viewmodles
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
