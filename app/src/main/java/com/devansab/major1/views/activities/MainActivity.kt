@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }else{
                 DebugLog.i(this, "user is not registered");
+                val intent = Intent(this, UserRegistrationActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         })
 
