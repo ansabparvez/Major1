@@ -10,11 +10,11 @@ import com.devansab.major1.data.entities.Test
 interface TestDao {
 
     @Query("SELECT * FROM test")
-    suspend fun getAll(): List<Test>
+    fun getAll(): List<Test>
 
     @Insert
     suspend fun insert(test: Test)
 
     @Delete
-    suspend fun delete(test: Test)
+    fun delete(test: Test)
 }

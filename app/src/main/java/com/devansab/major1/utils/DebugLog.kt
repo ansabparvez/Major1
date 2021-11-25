@@ -15,7 +15,7 @@ class DebugLog {
             Log.i(finalTag, message);
         }
 
-        public fun e(tag: String, message: String) {
+        public fun e(tag: Any, message: String) {
             if (!BuildConfig.DEBUG)
                 return
 
