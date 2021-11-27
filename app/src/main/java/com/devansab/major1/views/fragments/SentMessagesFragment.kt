@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
 import com.devansab.major1.adapters.SentMessagesRVAdapter
 import com.devansab.major1.data.entities.ChatPreview
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SentMessagesFragment : Fragment() {
-    private var rootView: View? = null;
+    private lateinit var rootView: View;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class SentMessagesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_sent_messages, container, false)
 
@@ -33,11 +35,13 @@ class SentMessagesFragment : Fragment() {
     }
 
     private fun initViews() {
-        val toolbar : Toolbar? = rootView?.findViewById(R.id.toolbar_sentMsg_toolbar)
+        val toolbar: Toolbar? = rootView.findViewById(R.id.toolbar_sentMsg_toolbar)
+        rootView.findViewById<FloatingActionButton>(R.id.fab_sentMsg_findUser)
+            .setOnClickListener { showFindUserPopUp() }
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.title = "Sent Messages"
 
-        val rvChatPreview = rootView?.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
+        val rvChatPreview = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
         val chatPreviewList = ArrayList<ChatPreview>()
         chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
         chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
@@ -59,5 +63,14 @@ class SentMessagesFragment : Fragment() {
         rvChatPreview?.layoutManager = LinearLayoutManager(context)
         rvChatPreview?.adapter = chatPreviewAdapter
         chatPreviewAdapter.notifyItemRangeInserted(0, chatPreviewList.size)
+    }
+
+    private fun showFindUserPopUp(){
+        val findUserLayout = activity?.layoutInflater?.inflate(R.layout.layout_search_user, null)
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setView(findUserLayout)
+            .create()
+
+        alertDialog.show()
     }
 }
