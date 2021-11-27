@@ -87,4 +87,7 @@ dependencies {
 
     //Volley
     implementation("com.android.volley:volley:1.2.1")
+
+    //Circular Image View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
