@@ -5,19 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
 import com.devansab.major1.adapters.SentMessagesRVAdapter
 import com.devansab.major1.data.entities.ChatPreview
+import com.devansab.major1.utils.MainApplication
+import com.devansab.major1.viewmodles.SentMessagesFragViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import es.dmoral.toasty.Toasty
 
 class SentMessagesFragment : Fragment() {
     private lateinit var rootView: View;
+    private lateinit var viewModel: SentMessagesFragViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +48,11 @@ class SentMessagesFragment : Fragment() {
             .setOnClickListener { showFindUserPopUp() }
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.title = "Sent Messages"
+
+        viewModel = ViewModelProvider(
+            this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(MainApplication.instance)
+        )[SentMessagesFragViewModel::class.java]
 
         val rvChatPreview = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
         val chatPreviewList = ArrayList<ChatPreview>()
@@ -65,12 +78,30 @@ class SentMessagesFragment : Fragment() {
         chatPreviewAdapter.notifyItemRangeInserted(0, chatPreviewList.size)
     }
 
-    private fun showFindUserPopUp(){
+    private fun showFindUserPopUp() {
         val findUserLayout = activity?.layoutInflater?.inflate(R.layout.layout_search_user, null)
         val alertDialog = AlertDialog.Builder(requireContext())
             .setView(findUserLayout)
             .create()
 
+        val etSearchUserName = findUserLayout?.findViewById<EditText>(R.id.et_searchUser_userName);
+        val btnSearchUser = findUserLayout?.findViewById<Button>(R.id.btn_searchUser_search);
+
+        setFindUserObserver()
+        btnSearchUser?.setOnClickListener {
+            viewModel.findUser(etSearchUserName?.text.toString())
+        }
+
         alertDialog.show()
+    }
+
+    private fun setFindUserObserver(){
+        viewModel.getFindUserLiveData().observe(this, Observer {
+            if(it.success){
+                Toasty.success(requireContext(), it.user?.userName.toString()).show()
+            }else{
+                Toasty.error(requireContext(), it.error.toString()).show()
+            }
+        })
     }
 }

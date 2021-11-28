@@ -7,6 +7,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.devansab.major1.data.entities.User
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
 import com.devansab.major1.utils.SharedPrefManager
@@ -19,6 +20,7 @@ class UserRepository(val application: Application) {
     private val isUserRegisteredLiveData = MutableLiveData<Boolean>();
     private val isUserNameAvailableLiveData = MutableLiveData<Boolean>();
     private val userRegistrationLiveData = MutableLiveData<Boolean>();
+    private val findUserLiveData = MutableLiveData<FindUserModel>();
 
     public fun isUserRegistered() {
         val user = FirebaseAuth.getInstance().currentUser ?: return;
@@ -67,6 +69,10 @@ class UserRepository(val application: Application) {
 
     public fun getUserRegistrationLiveData(): LiveData<Boolean> {
         return userRegistrationLiveData
+    }
+
+    public fun getFindUserLiveData(): LiveData<FindUserModel>{
+        return findUserLiveData
     }
 
     public fun checkUserNameAvailable(userName: String) {
@@ -127,5 +133,45 @@ class UserRepository(val application: Application) {
             };
         MainApplication.instance.addToRequestQueue(jsonObjectRequest);
     }
+
+    public fun findUser(userName: String) {
+        val url =
+            "https://us-central1-major1-99a4c.cloudfunctions.net/userV1/findUser?userName=$userName"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    DebugLog.i("ansab", "response: ($response.toString())")
+                    if (response.getBoolean("success")) {
+                        val user = User(
+                            response.getString("userName"),
+                            response.getString("name")
+                        )
+                        findUserLiveData.value = FindUserModel(true, null, user)
+                    } else {
+                        findUserLiveData.value = FindUserModel(
+                            false,
+                            response.getString("error")
+                        )
+                    }
+                },
+                Response.ErrorListener { }
+            ) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    val token = SharedPrefManager.getInstance(application).getAuthToken();
+                    params["Authorization"] = "Bearer $token"
+                    params["Content-Type"] = "application/json"
+                    return params
+                }
+            };
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest)
+    }
+
+    data class FindUserModel(
+        val success: Boolean,
+        var error: String? = null,
+        var user: User? = null
+    )
 
 }

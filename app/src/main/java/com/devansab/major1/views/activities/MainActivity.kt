@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devansab.major1.viewmodles.MainViewModel
 import com.devansab.major1.R
 import com.devansab.major1.utils.DebugLog
+import com.devansab.major1.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -18,8 +19,9 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
-        ).get(MainViewModel::class.java);
+        )[MainViewModel::class.java];
 
+        //FirebaseAuth.getInstance().signOut()
         val user = FirebaseAuth.getInstance().currentUser;
         if (user == null) {
             DebugLog.i(this, "user is null");
@@ -45,6 +47,5 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         })
-
     }
 }
