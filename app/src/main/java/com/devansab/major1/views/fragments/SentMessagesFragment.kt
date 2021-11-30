@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -61,62 +62,60 @@ class SentMessagesFragment : Fragment() {
         val appDatabase = AppDatabase.getInstance(requireContext())
         val lastMessageDao = appDatabase.lastMessageDao()
 
-        GlobalScope.launch {
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab", "this is1 from ansab",
-                    System.currentTimeMillis(), "Ansab Parvez"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab_2", "this is 1 from ansab_2",
-                    System.currentTimeMillis(), "John"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab_3", "this is 1 from ansab_3",
-                    System.currentTimeMillis(), "Doe"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab_2", "this is 2 from ansab_2",
-                    System.currentTimeMillis(), "John"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab_2", "this is 3 from ansab_2",
-                    System.currentTimeMillis(), "John"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab_4", "this is 1 from ansab_4",
-                    System.currentTimeMillis(), "Yuk"
-                )
-            )
-
-            lastMessageDao.insertLastMessage(
-                LastMessage(
-                    "ansab", "this is last from ansab",
-                    System.currentTimeMillis(), "Ansab Parvez"
-                )
-            )
-        }
+//        GlobalScope.launch {
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab", "this is1 from ansab",
+//                    System.currentTimeMillis(), "Ansab Parvez", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 1 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_3", "this is 1 from ansab_3",
+//                    System.currentTimeMillis(), "Doe", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 2 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 3 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_4", "this is 1 from ansab_4",
+//                    System.currentTimeMillis(), "Yuk", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab", "this is last from ansab",
+//                    System.currentTimeMillis(), "Ansab Parvez", false
+//                )
+//            )
+//        }
 
         viewModel.viewModelScope.launch {
-            viewModel.getAllLastMessages().collect {
-                DebugLog.i(this, "list size: ${it.size}")
-                Toasty.success(requireContext(), "list size: ${it.size}").show()
-                displayLastMessages(it)
+            viewModel.getAllUnAnonymousLastMessages().collect {
+                displayLastMessages(ArrayList(it))
             }
         }
     }
@@ -148,7 +147,12 @@ class SentMessagesFragment : Fragment() {
         })
     }
 
-    private fun displayLastMessages(messagesList: List<LastMessage>){
+    private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
+        if (messagesList.size == 0) {
+            rootView.findViewById<TextView>(R.id.tv_sentMsg_noChatsText)
+                .visibility = View.VISIBLE
+            return
+        }
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview);
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
         val sentMessagesAdapter = SentMessagesRVAdapter(messagesList)

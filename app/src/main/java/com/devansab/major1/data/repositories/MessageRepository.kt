@@ -15,7 +15,8 @@ class MessageRepository(private val application: Application) {
         lastMessageDao = appDatabase.lastMessageDao()
     }
 
-    fun getAllLastMessages() : Flow<List<LastMessage>> = lastMessageDao.getAll()
+    fun getAllUnAnonymousLastMessages() :
+            Flow<List<LastMessage>> = lastMessageDao.getAllUnAnonymousLastMessages()
 
 
 }

@@ -23,5 +23,6 @@ class SentMessagesFragViewModel(application: Application) : AndroidViewModel(app
         return userRepository.getFindUserLiveData()
     }
 
-    fun getAllLastMessages() : Flow<List<LastMessage>> = messageRepository.getAllLastMessages()
+    fun getAllUnAnonymousLastMessages() :
+            Flow<List<LastMessage>> = messageRepository.getAllUnAnonymousLastMessages()
 }

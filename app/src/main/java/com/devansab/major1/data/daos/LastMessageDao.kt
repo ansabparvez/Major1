@@ -14,5 +14,8 @@ abstract interface LastMessageDao {
     suspend fun insertLastMessage(lastMessage: LastMessage)
 
     @Query("SELECT * FROM lastMessages")
-    fun getAll() : Flow<List<LastMessage>>
+    fun getAll(): Flow<List<LastMessage>>
+
+    @Query("SELECT * FROM lastMessages WHERE isAnonymous = 0")
+    fun getAllUnAnonymousLastMessages(): Flow<List<LastMessage>>
 }

@@ -9,6 +9,9 @@ data class Message(
     val messageId: String,
     val text: Long,
     val time: String,
-    val userName: String
+    //This is the userName of person which is on the other side of the chat.
+    val userName: String,
+    val sentByMe: Boolean,
+    val isAnonymous: Boolean
 ) {
 }
