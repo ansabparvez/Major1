@@ -71,7 +71,7 @@ class UserRepository(val application: Application) {
         return userRegistrationLiveData
     }
 
-    public fun getFindUserLiveData(): LiveData<FindUserModel>{
+    public fun getFindUserLiveData(): LiveData<FindUserModel> {
         return findUserLiveData
     }
 

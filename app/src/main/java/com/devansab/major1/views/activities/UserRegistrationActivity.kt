@@ -3,17 +3,15 @@ package com.devansab.major1.views.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.major1.R
 import com.devansab.major1.utils.DebugLog
-import com.devansab.major1.viewmodles.UserRegistrationViewModel
+import com.devansab.major1.viewmodels.UserRegistrationViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import es.dmoral.toasty.Toasty
 

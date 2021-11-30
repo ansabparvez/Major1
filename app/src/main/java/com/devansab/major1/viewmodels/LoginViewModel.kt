@@ -1,12 +1,11 @@
-package com.devansab.major1.viewmodles
+package com.devansab.major1.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.devansab.major1.data.repositories.UserRepository
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private var userRepository = UserRepository(application)
 

@@ -1,15 +1,12 @@
-package com.devansab.major1.viewmodles
+package com.devansab.major1.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.devansab.major1.data.repositories.UserRepository
 import com.devansab.major1.utils.SharedPrefManager
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 
 class UserRegistrationViewModel(application: Application) : AndroidViewModel(application) {
 
