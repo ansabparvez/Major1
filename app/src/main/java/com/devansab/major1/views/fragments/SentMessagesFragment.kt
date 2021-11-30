@@ -7,21 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
 import com.devansab.major1.adapters.SentMessagesRVAdapter
-import com.devansab.major1.data.entities.ChatPreview
+import com.devansab.major1.data.AppDatabase
+import com.devansab.major1.data.entities.LastMessage
+import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
-import com.devansab.major1.viewmodles.SentMessagesFragViewModel
+import com.devansab.major1.viewmodels.SentMessagesFragViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class SentMessagesFragment : Fragment() {
     private lateinit var rootView: View;
@@ -54,28 +58,67 @@ class SentMessagesFragment : Fragment() {
                 .getInstance(MainApplication.instance)
         )[SentMessagesFragViewModel::class.java]
 
-        val rvChatPreview = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
-        val chatPreviewList = ArrayList<ChatPreview>()
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab", "This is a text message", "15/12/2020"))
-        chatPreviewList.add(ChatPreview("ansab last", "This is a text message", "15/12/2020"))
+        val appDatabase = AppDatabase.getInstance(requireContext())
+        val lastMessageDao = appDatabase.lastMessageDao()
 
-        val chatPreviewAdapter = SentMessagesRVAdapter(chatPreviewList)
-        rvChatPreview?.layoutManager = LinearLayoutManager(context)
-        rvChatPreview?.adapter = chatPreviewAdapter
-        chatPreviewAdapter.notifyItemRangeInserted(0, chatPreviewList.size)
+        GlobalScope.launch {
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab", "this is1 from ansab",
+                    System.currentTimeMillis(), "Ansab Parvez"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab_2", "this is 1 from ansab_2",
+                    System.currentTimeMillis(), "John"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab_3", "this is 1 from ansab_3",
+                    System.currentTimeMillis(), "Doe"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab_2", "this is 2 from ansab_2",
+                    System.currentTimeMillis(), "John"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab_2", "this is 3 from ansab_2",
+                    System.currentTimeMillis(), "John"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab_4", "this is 1 from ansab_4",
+                    System.currentTimeMillis(), "Yuk"
+                )
+            )
+
+            lastMessageDao.insertLastMessage(
+                LastMessage(
+                    "ansab", "this is last from ansab",
+                    System.currentTimeMillis(), "Ansab Parvez"
+                )
+            )
+        }
+
+        viewModel.viewModelScope.launch {
+            viewModel.getAllLastMessages().collect {
+                DebugLog.i(this, "list size: ${it.size}")
+                Toasty.success(requireContext(), "list size: ${it.size}").show()
+                displayLastMessages(it)
+            }
+        }
     }
 
     private fun showFindUserPopUp() {
@@ -95,13 +138,23 @@ class SentMessagesFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun setFindUserObserver(){
-        viewModel.getFindUserLiveData().observe(this, Observer {
-            if(it.success){
+    private fun setFindUserObserver() {
+        viewModel.getFindUserLiveData().observe(viewLifecycleOwner, Observer {
+            if (it.success) {
                 Toasty.success(requireContext(), it.user?.userName.toString()).show()
-            }else{
+            } else {
                 Toasty.error(requireContext(), it.error.toString()).show()
             }
         })
     }
+
+    private fun displayLastMessages(messagesList: List<LastMessage>){
+        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview);
+        rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
+        val sentMessagesAdapter = SentMessagesRVAdapter(messagesList)
+        rvLastMessages.adapter = sentMessagesAdapter
+        sentMessagesAdapter.notifyDataSetChanged()
+    }
+
+
 }

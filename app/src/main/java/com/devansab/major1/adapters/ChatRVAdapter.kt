@@ -7,41 +7,38 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
-import com.devansab.major1.data.entities.Chat
-import com.devansab.major1.data.entities.Chat.Companion.TYPE_RECEIVED
-import com.devansab.major1.data.entities.Chat.Companion.TYPE_SENT
 import java.util.*
 
-class ChatRVAdapter(private val chatList: List<Chat>) :
+class ChatRVAdapter(private val chatList: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var view: View;
-        if (viewType == TYPE_SENT) {
-            view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_message_sent, parent, false);
-            return SentChatHolder(view)
-        }
+//        if (viewType == TYPE_SENT) {
+//            view = LayoutInflater.from(parent.context)
+//                .inflate(R.layout.item_message_sent, parent, false);
+//            return SentChatHolder(view)
+//        }
         view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_message_received, parent, false);
         return ReceivedChatHolder(view);
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val chat = chatList[position]
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = chat.time
-        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        val time = dateFormat.format(calendar.time)
-
-        if (chat.type == TYPE_SENT) {
-            val sentHolder: SentChatHolder = holder as SentChatHolder;
-            sentHolder.message.text = chat.message
-            sentHolder.time.text = time;
-        } else if (chat.type == TYPE_RECEIVED) {
-            val recChatHolder: ReceivedChatHolder = holder as ReceivedChatHolder;
-            recChatHolder.message.text = chat.message
-            recChatHolder.time.text = time
-        }
+//        val chat = chatList[position]
+//        val calendar = Calendar.getInstance()
+//        calendar.timeInMillis = chat.time
+//        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//        val time = dateFormat.format(calendar.time)
+//
+//        if (chat.type == TYPE_SENT) {
+//            val sentHolder: SentChatHolder = holder as SentChatHolder;
+//            sentHolder.message.text = chat.message
+//            sentHolder.time.text = time;
+//        } else if (chat.type == TYPE_RECEIVED) {
+//            val recChatHolder: ReceivedChatHolder = holder as ReceivedChatHolder;
+//            recChatHolder.message.text = chat.message
+//            recChatHolder.time.text = time
+//        }
 
     }
 
@@ -50,7 +47,8 @@ class ChatRVAdapter(private val chatList: List<Chat>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (chatList[position].type == TYPE_SENT) TYPE_SENT else TYPE_RECEIVED;
+        return 0;
+        //return if (chatList[position].type == TYPE_SENT) TYPE_SENT else TYPE_RECEIVED;
     }
 
     class SentChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
