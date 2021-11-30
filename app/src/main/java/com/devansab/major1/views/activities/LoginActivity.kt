@@ -15,8 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devansab.major1.R
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.UnitConverter
-import com.devansab.major1.viewmodles.LoginViewModel
-import com.devansab.major1.viewmodles.MainViewModel
+import com.devansab.major1.viewmodels.LoginViewModel
 import com.google.android.gms.common.SignInButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
@@ -174,9 +173,11 @@ class LoginActivity : AppCompatActivity() {
         viewModel.getRegisterUserLiveData().observe(this, Observer { isRegistered ->
             if (isRegistered) {
                 startActivity(Intent(baseContext, HomeActivity::class.java))
+                alertDialog?.cancel()
                 finish()
             } else {
                 startActivity(Intent(baseContext, UserRegistrationActivity::class.java))
+                alertDialog?.cancel()
                 finish()
             }
         })
