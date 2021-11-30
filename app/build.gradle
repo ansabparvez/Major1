@@ -49,12 +49,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Kotlin coroutine dependencies
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     // Room architecture component dependencies
-    implementation 'androidx.room:room-runtime:2.4.0-beta02'
+    //implementation 'androidx.room:room-runtime:2.4.0-beta02'
     kapt 'androidx.room:room-compiler:2.4.0-beta02'
     implementation 'androidx.room:room-ktx:2.4.0-beta02'
+
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+
 
     //Google Play services
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
