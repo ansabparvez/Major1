@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
-import com.devansab.major1.data.entities.ChatPreview
+import com.devansab.major1.data.entities.LastMessage
 
-class SentMessagesRVAdapter(private val chatPreviewList: List<ChatPreview>) :
+class SentMessagesRVAdapter(private val lastMessage: List<LastMessage>) :
     RecyclerView.Adapter<SentMessagesRVAdapter.MessageHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageHolder {
@@ -18,14 +18,14 @@ class SentMessagesRVAdapter(private val chatPreviewList: List<ChatPreview>) :
     }
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
-        val chatPreview = chatPreviewList[position];
-        holder.tvName.text = chatPreview.userName;
-        holder.tvDate.text = chatPreview.date;
-        holder.tvMessage.text = chatPreview.lastMessage;
+        val message = lastMessage[position];
+        holder.tvName.text = message.name
+        holder.tvDate.text = message.time.toString()
+        holder.tvMessage.text = message.text
     }
 
     override fun getItemCount(): Int {
-        return chatPreviewList.size;
+        return lastMessage.size;
     }
 
 
