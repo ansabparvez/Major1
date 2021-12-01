@@ -27,7 +27,7 @@ class SentMessagesFragViewModel(application: Application) : AndroidViewModel(app
     fun getAllUnAnonymousLastMessages() :
             Flow<List<LastMessage>> = messageRepository.getAllUnAnonymousLastMessages()
 
-    fun insertUser(user: User) {
+    suspend fun insertUser(user: User) {
         userRepository.insertUser(user)
     }
 }
