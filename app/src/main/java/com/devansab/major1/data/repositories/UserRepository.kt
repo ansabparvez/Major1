@@ -173,9 +173,11 @@ class UserRepository(val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    fun insertUser(user: User){
-        userDao.insertUser(user)
+    suspend fun insertUser(user: User){
+         userDao.insertUser(user)
     }
+
+    fun getUserByUsername(username : String) = userDao.getUserByUsername(username)
 
     data class FindUserModel(
         val success: Boolean,
