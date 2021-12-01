@@ -5,13 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devansab.major1.data.daos.LastMessageDao
-import com.devansab.major1.data.daos.TestDao
 import com.devansab.major1.data.daos.UserDao
 import com.devansab.major1.data.entities.LastMessage
-import com.devansab.major1.data.entities.Test
+import com.devansab.major1.data.entities.Message
 import com.devansab.major1.data.entities.User
 
-@Database(entities = [LastMessage::class, User::class], version = 1)
+@Database(entities = [LastMessage::class, User::class, Message::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
