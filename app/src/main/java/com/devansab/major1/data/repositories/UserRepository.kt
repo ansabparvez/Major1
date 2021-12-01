@@ -1,12 +1,15 @@
 package com.devansab.major1.data.repositories
 
 import android.app.Application
+import android.service.autofill.UserData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.devansab.major1.data.AppDatabase
+import com.devansab.major1.data.daos.UserDao
 import com.devansab.major1.data.entities.User
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
@@ -21,6 +24,8 @@ class UserRepository(val application: Application) {
     private val isUserNameAvailableLiveData = MutableLiveData<Boolean>();
     private val userRegistrationLiveData = MutableLiveData<Boolean>();
     private val findUserLiveData = MutableLiveData<FindUserModel>();
+    private val appDatabase = AppDatabase.getInstance(application)
+    private var userDao: UserDao = appDatabase.userDao()
 
     public fun isUserRegistered() {
         val user = FirebaseAuth.getInstance().currentUser ?: return;
@@ -166,6 +171,10 @@ class UserRepository(val application: Application) {
                 }
             };
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
+    }
+
+    fun insertUser(user: User){
+        userDao.insertUser(user)
     }
 
     data class FindUserModel(

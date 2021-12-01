@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.devansab.major1.data.entities.LastMessage
+import com.devansab.major1.data.entities.User
 import com.devansab.major1.data.repositories.MessageRepository
 import com.devansab.major1.data.repositories.UserRepository
 import com.devansab.major1.utils.DebugLog
@@ -25,4 +26,8 @@ class SentMessagesFragViewModel(application: Application) : AndroidViewModel(app
 
     fun getAllUnAnonymousLastMessages() :
             Flow<List<LastMessage>> = messageRepository.getAllUnAnonymousLastMessages()
+
+    fun insertUser(user: User) {
+        userRepository.insertUser(user)
+    }
 }

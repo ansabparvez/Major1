@@ -8,6 +8,7 @@ import com.devansab.major1.R
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var rvChat: RecyclerView
+    //private lateinit var view
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

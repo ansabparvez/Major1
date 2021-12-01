@@ -145,6 +145,9 @@ class SentMessagesFragment : Fragment() {
                 val intent = Intent(requireActivity(), ChatActivity::class.java)
                 intent.putExtra("userName", it.user?.userName)
                 startActivity(intent)
+                viewModel.viewModelScope.launch {
+                    viewModel.insertUser(it.user!!);
+                }
                 Toasty.success(requireContext(), it.user?.userName.toString()).show()
             } else {
                 Toasty.error(requireContext(), it.error.toString()).show()
