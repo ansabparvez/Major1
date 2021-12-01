@@ -144,7 +144,7 @@ class UserRepository(val application: Application) {
                     if (response.getBoolean("success")) {
                         val user = User(
                             response.getString("userName"),
-                            response.getString("name")
+                            response.getString("name"), false
                         )
                         findUserLiveData.value = FindUserModel(true, null, user)
                     } else {

@@ -1,5 +1,6 @@
 package com.devansab.major1.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
 import com.devansab.major1.viewmodels.SentMessagesFragViewModel
+import com.devansab.major1.views.activities.ChatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.GlobalScope
@@ -140,6 +142,9 @@ class SentMessagesFragment : Fragment() {
     private fun setFindUserObserver() {
         viewModel.getFindUserLiveData().observe(viewLifecycleOwner, Observer {
             if (it.success) {
+                val intent = Intent(requireActivity(), ChatActivity::class.java)
+                intent.putExtra("userName", it.user?.userName)
+                startActivity(intent)
                 Toasty.success(requireContext(), it.user?.userName.toString()).show()
             } else {
                 Toasty.error(requireContext(), it.error.toString()).show()
