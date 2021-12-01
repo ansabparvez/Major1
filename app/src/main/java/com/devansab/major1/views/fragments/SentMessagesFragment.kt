@@ -148,7 +148,7 @@ class SentMessagesFragment : Fragment() {
                 viewModel.viewModelScope.launch {
                     viewModel.insertUser(it.user!!);
                 }
-                Toasty.success(requireContext(), it.user?.userName.toString()).show()
+                //Toasty.success(requireContext(), it.user?.userName.toString()).show()
             } else {
                 Toasty.error(requireContext(), it.error.toString()).show()
             }

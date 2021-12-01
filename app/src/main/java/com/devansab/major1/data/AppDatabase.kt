@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devansab.major1.data.daos.LastMessageDao
+import com.devansab.major1.data.daos.MessageDao
 import com.devansab.major1.data.daos.UserDao
 import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.data.entities.Message
@@ -15,6 +16,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun lastMessageDao(): LastMessageDao
+    abstract fun messageDao(): MessageDao
 
     companion object {
         @Volatile

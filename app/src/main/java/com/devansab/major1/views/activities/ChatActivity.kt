@@ -3,11 +3,14 @@ package com.devansab.major1.views.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
+import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.viewmodels.ChatViewModel
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -39,6 +42,11 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-
+        viewmodel.viewModelScope.launch {
+            viewmodel.getAllMessagesOfUser(userName!!).collect {
+                Toasty.success(baseContext, "size: ${it.size}").show()
+                DebugLog.i("ansab", "chat size: ${it.size}")
+            }
+        }
     }
 }

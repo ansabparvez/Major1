@@ -4,19 +4,19 @@ import android.app.Application
 import com.devansab.major1.data.AppDatabase
 import com.devansab.major1.data.daos.LastMessageDao
 import com.devansab.major1.data.entities.LastMessage
+import com.devansab.major1.data.entities.Message
 import kotlinx.coroutines.flow.Flow
 
 class MessageRepository(private val application: Application) {
 
-    private lateinit var lastMessageDao: LastMessageDao;
     private val appDatabase = AppDatabase.getInstance(application)
+    private var lastMessageDao: LastMessageDao = appDatabase.lastMessageDao();
+    private var messageDao = appDatabase.messageDao();
 
-    init {
-        lastMessageDao = appDatabase.lastMessageDao()
-    }
-
-    fun getAllUnAnonymousLastMessages() :
+    fun getAllUnAnonymousLastMessages():
             Flow<List<LastMessage>> = lastMessageDao.getAllUnAnonymousLastMessages()
 
+    fun getAllMessagesOfUser(username: String) :
+            Flow<List<Message>> = messageDao.getAllMessagesOfUser(username)
 
 }

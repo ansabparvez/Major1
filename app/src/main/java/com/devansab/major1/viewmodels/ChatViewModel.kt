@@ -11,4 +11,6 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getUserByUsername(username: String) = userRepository.getUserByUsername(username)
 
+    fun getAllMessagesOfUser(username: String) =
+        messageRepository.getAllMessagesOfUser(username)
 }
