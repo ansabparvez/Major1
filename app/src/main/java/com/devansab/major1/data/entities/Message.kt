@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class Message(
     @PrimaryKey
     val messageId: String,
-    val text: Long,
-    val time: String,
+    val text: String,
+    val time: Long,
     //This is the userName of person which is on the other side of the chat.
     val userName: String,
     val sentByMe: Boolean,

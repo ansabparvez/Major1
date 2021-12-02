@@ -11,6 +11,6 @@ abstract interface MessageDao {
     @Insert(onConflict = REPLACE)
     suspend fun insertMessage(message: Message)
 
-    @Query("SELECT * FROM messages WHERE userName = :userName")
-    fun getAllMessagesOfUser(userName: String): Flow<List<Message>>
+    @Query("SELECT * FROM messages WHERE userName = :userName AND isAnonymous = :isAnonymous ORDER BY time")
+    fun getAllMessagesOfUser(userName: String, isAnonymous: Int): Flow<List<Message>>
 }

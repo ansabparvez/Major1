@@ -16,7 +16,10 @@ class MessageRepository(private val application: Application) {
     fun getAllUnAnonymousLastMessages():
             Flow<List<LastMessage>> = lastMessageDao.getAllUnAnonymousLastMessages()
 
-    fun getAllMessagesOfUser(username: String) :
-            Flow<List<Message>> = messageDao.getAllMessagesOfUser(username)
+    fun getAllMessagesOfUser(username: String, isAnonymous: Int) :
+            Flow<List<Message>> = messageDao.getAllMessagesOfUser(username, isAnonymous)
 
+    suspend fun sendMessageAnonymously(message: Message){
+        messageDao.insertMessage(message)
+    }
 }
