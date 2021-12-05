@@ -7,7 +7,6 @@ import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.data.entities.User
 import com.devansab.major1.data.repositories.MessageRepository
 import com.devansab.major1.data.repositories.UserRepository
-import com.devansab.major1.utils.DebugLog
 import kotlinx.coroutines.flow.Flow
 
 class ReceivedMessagesFragViewModel(application: Application) : AndroidViewModel(application) {
@@ -20,7 +19,8 @@ class ReceivedMessagesFragViewModel(application: Application) : AndroidViewModel
     }
 
     fun getAllAnonymousLastMessages() :
-            Flow<List<LastMessage>> = messageRepository.getAllUnAnonymousLastMessages()
+    //Not anonymous, so provide 0 for room query
+            Flow<List<LastMessage>> = messageRepository.getAllLastMessages(1)
 
     suspend fun insertUser(user: User) {
         userRepository.insertUser(user)

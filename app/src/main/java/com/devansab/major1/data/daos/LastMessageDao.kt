@@ -16,6 +16,6 @@ abstract interface LastMessageDao {
     @Query("SELECT * FROM lastMessages")
     fun getAll(): Flow<List<LastMessage>>
 
-    @Query("SELECT * FROM lastMessages WHERE isAnonymous = 0")
-    fun getAllUnAnonymousLastMessages(): Flow<List<LastMessage>>
+    @Query("SELECT * FROM lastMessages WHERE isAnonymous = :isAnonymous")
+    fun getAllLastMessages(isAnonymous : Int): Flow<List<LastMessage>>
 }
