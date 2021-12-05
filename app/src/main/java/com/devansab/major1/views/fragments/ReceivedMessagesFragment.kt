@@ -1,19 +1,39 @@
 package com.devansab.major1.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.ToolbarWidgetWrapper
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devansab.major1.R
+import com.devansab.major1.adapters.ReceivedMessagesRVAdapter
+import com.devansab.major1.adapters.SentMessagesRVAdapter
+import com.devansab.major1.data.AppDatabase
+import com.devansab.major1.data.entities.LastMessage
+import com.devansab.major1.utils.MainApplication
+import com.devansab.major1.viewmodels.ReceivedMessagesFragViewModel
+import com.devansab.major1.viewmodels.SentMessagesFragViewModel
+import com.devansab.major1.views.activities.ChatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
-class ReceivedMessagesFragment : Fragment() {
-
-    private var rootView: View? = null;
+class ReceivedMessagesFragment : Fragment() {    private lateinit var rootView: View;
+    private lateinit var viewModel: ReceivedMessagesFragViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,16 +42,90 @@ class ReceivedMessagesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_received_messages, container, false)
+
         initViews();
         return rootView
     }
 
     private fun initViews() {
-        val toolbar : Toolbar? = rootView?.findViewById(R.id.toolbar_reMsg_toolbar)
+        val toolbar: Toolbar? = rootView.findViewById(R.id.toolbar_reMsg_toolbar)
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.title = "Received Messages"
+
+        viewModel = ViewModelProvider(
+            this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(MainApplication.instance)
+        )[ReceivedMessagesFragViewModel::class.java]
+
+        val appDatabase = AppDatabase.getInstance(requireContext())
+        val lastMessageDao = appDatabase.lastMessageDao()
+
+//        GlobalScope.launch {
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab", "this is1 from ansab",
+//                    System.currentTimeMillis(), "Ansab Parvez", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 1 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_3", "this is 1 from ansab_3",
+//                    System.currentTimeMillis(), "Doe", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 2 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_2", "this is 3 from ansab_2",
+//                    System.currentTimeMillis(), "John", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab_4", "this is 1 from ansab_4",
+//                    System.currentTimeMillis(), "Yuk", false
+//                )
+//            )
+//
+//            lastMessageDao.insertLastMessage(
+//                LastMessage(
+//                    "ansab", "this is last from ansab",
+//                    System.currentTimeMillis(), "Ansab Parvez", false
+//                )
+//            )
+//        }
+
+        viewModel.viewModelScope.launch {
+            viewModel.getAllAnonymousLastMessages().collect {
+                displayLastMessages(ArrayList(it))
+            }
+        }
+    }
+
+    private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
+        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_reMsg_chatPreview);
+        rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
+        val sentMessagesAdapter = ReceivedMessagesRVAdapter(messagesList)
+        rvLastMessages.adapter = sentMessagesAdapter
+        sentMessagesAdapter.notifyDataSetChanged()
     }
 }
