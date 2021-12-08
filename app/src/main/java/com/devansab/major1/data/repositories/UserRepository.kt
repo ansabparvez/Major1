@@ -11,6 +11,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.devansab.major1.data.AppDatabase
 import com.devansab.major1.data.daos.UserDao
 import com.devansab.major1.data.entities.User
+import com.devansab.major1.utils.Const
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
 import com.devansab.major1.utils.SharedPrefManager
@@ -47,6 +48,9 @@ class UserRepository(val application: Application) {
                     if (response.getBoolean("success")) {
                         isUserRegisteredLiveData.value =
                             response.getBoolean("registrationFinished")
+                        if(response.getBoolean("registrationFinished")){
+                            saveUserDataToSharedPref(response.getJSONObject("userData"))
+                        }
                     } else {
                         isUserRegisteredLiveData.value = false
                     }
@@ -116,6 +120,9 @@ class UserRepository(val application: Application) {
                 Response.Listener { response ->
                     DebugLog.i("ansab", response.toString())
                     userRegistrationLiveData.value = response.getBoolean("success")
+                    if(response.getBoolean("success")){
+                        saveUserDataToSharedPref(response.getJSONObject("userData"))
+                    }
                 },
                 Response.ErrorListener { }
             ) {
@@ -184,5 +191,15 @@ class UserRepository(val application: Application) {
         var error: String? = null,
         var user: User? = null
     )
+
+    private fun saveUserDataToSharedPref(userData: JSONObject){
+        val userDataMap = HashMap<String, String>();
+        userDataMap[Const.KEY_USER_NAME] = userData.getString("name")
+        userDataMap[Const.KEY_USER_UNAME] = userData.getString("userName")
+        userDataMap[Const.KEY_USER_ANON_ID] = userData.getString("anonymousId")
+
+        SharedPrefManager.getInstance(application).setUserData(userDataMap);
+        DebugLog.i("ansab", userDataMap.toString());
+    }
 
 }

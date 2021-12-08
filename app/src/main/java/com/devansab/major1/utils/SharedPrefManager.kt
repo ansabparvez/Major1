@@ -47,6 +47,7 @@ class SharedPrefManager {
             .putString(KEY_USER_NAME, userData[Const.KEY_USER_NAME])
             .putString(KEY_USER_UNAME, userData[Const.KEY_USER_UNAME])
             .putString(KEY_USER_ANON_ID, userData[Const.KEY_USER_ANON_ID])
+            .apply()
     }
 
     public fun getUserData(): Map<String, String> {
