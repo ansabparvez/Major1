@@ -47,7 +47,6 @@ class ChatRVAdapter(private val messages: List<Message>) :
             recChatHolder.message.text = message.text
             recChatHolder.time.text = time
         }
-
     }
 
     override fun getItemCount(): Int {

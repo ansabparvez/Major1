@@ -18,7 +18,7 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         return messageRepository.getAllMessagesOfUser(username, anonymous)
     }
 
-    suspend fun sendMessageAnonymously(message: Message){
-        messageRepository.sendMessageAnonymously(message)
+    suspend fun sendMessageToKnownUser(message: Message, receiverId: String){
+        messageRepository.sendMessageToKnownUser(message, receiverId)
     }
 }

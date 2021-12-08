@@ -28,7 +28,6 @@ class ReceivedMessagesRVAdapter(private val lastMessage: List<LastMessage>) :
         return lastMessage.size;
     }
 
-
     //View Holder Class
     class MessageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvName: TextView = itemView.findViewById(R.id.tv_listChat_name);

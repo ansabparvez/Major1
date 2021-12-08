@@ -2,8 +2,6 @@ package com.devansab.major1.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -83,7 +81,7 @@ class ChatActivity : AppCompatActivity() {
 
         etMessage.setText("")
         viewmodel.viewModelScope.launch {
-            viewmodel.sendMessageAnonymously(message)
+            viewmodel.sendMessageToKnownUser(message, userName)
         }
     }
 }
