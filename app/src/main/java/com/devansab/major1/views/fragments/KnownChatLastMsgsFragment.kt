@@ -22,7 +22,7 @@ import com.devansab.major1.data.AppDatabase
 import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.utils.MainApplication
 import com.devansab.major1.viewmodels.KnownChatLastMsgsViewModel
-import com.devansab.major1.views.activities.ChatActivity
+import com.devansab.major1.views.activities.KnownUserChatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
@@ -89,7 +89,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
     private fun setFindUserObserver() {
         viewModel.getFindUserLiveData().observe(viewLifecycleOwner, Observer {
             if (it.success) {
-                val intent = Intent(requireActivity(), ChatActivity::class.java)
+                val intent = Intent(requireActivity(), KnownUserChatActivity::class.java)
                 intent.putExtra("userName", it.user?.userName)
                 intent.putExtra("name", it.user?.name);
                 startActivity(intent)
@@ -117,9 +117,10 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
     }
 
     override fun onLastMessageClick(lastMessage: LastMessage) {
-        val intent = Intent(requireContext(), ChatActivity::class.java)
+        val intent = Intent(requireContext(), KnownUserChatActivity::class.java)
         intent.putExtra("userName", lastMessage.userName)
-        intent.putExtra("name", lastMessage.name);
+        intent.putExtra("name", lastMessage.name)
+        startActivity(intent)
     }
 
 

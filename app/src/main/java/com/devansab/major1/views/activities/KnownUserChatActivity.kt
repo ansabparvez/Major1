@@ -13,23 +13,23 @@ import com.devansab.major1.R
 import com.devansab.major1.adapters.ChatRVAdapter
 import com.devansab.major1.data.entities.Message
 import com.devansab.major1.utils.DebugLog
-import com.devansab.major1.viewmodels.ChatViewModel
+import com.devansab.major1.viewmodels.KnownUserChatViewModel
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatActivity : AppCompatActivity() {
+class KnownUserChatActivity : AppCompatActivity() {
 
     private lateinit var rvChat: RecyclerView
-    private lateinit var viewmodel: ChatViewModel
+    private lateinit var viewmodel: KnownUserChatViewModel
     private lateinit var userName: String
     private lateinit var name: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        setContentView(R.layout.activity_known_user_chat)
 
         initViews()
     }
@@ -39,7 +39,7 @@ class ChatActivity : AppCompatActivity() {
         viewmodel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
-        )[ChatViewModel::class.java]
+        )[KnownUserChatViewModel::class.java]
 
         findViewById<ImageButton>(R.id.ibtn_chat_sendMessage)
             .setOnClickListener { sendMessage() }

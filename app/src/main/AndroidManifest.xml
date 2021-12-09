@@ -17,7 +17,7 @@
             android:name=".views.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.ChatActivity"
+            android:name=".views.activities.KnownUserChatActivity"
             android:exported="false" />
         <activity
             android:name=".views.activities.HomeActivity"

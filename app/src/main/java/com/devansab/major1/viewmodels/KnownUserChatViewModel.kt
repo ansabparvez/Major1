@@ -2,14 +2,17 @@ package com.devansab.major1.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.data.entities.Message
+import com.devansab.major1.data.repositories.LastMessageRepository
 import com.devansab.major1.data.repositories.MessageRepository
 import com.devansab.major1.data.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
 
-class ChatViewModel(application: Application) : AndroidViewModel(application) {
+class KnownUserChatViewModel(application: Application) : AndroidViewModel(application) {
     private val messageRepository = MessageRepository(application)
     private val userRepository = UserRepository(application)
+    private val lastMessageRepository = LastMessageRepository(application)
 
     fun getUserByUsername(username: String) = userRepository.getUserByUsername(username)
 
@@ -19,6 +22,8 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
+        val lastMessage = LastMessage(receiverId, message.text, message.time, name, false)
+        lastMessageRepository.updateLastMessage(lastMessage)
         messageRepository.sendMessageToKnownUser(message, receiverId, name)
     }
 }
