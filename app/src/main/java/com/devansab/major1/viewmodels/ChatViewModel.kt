@@ -14,11 +14,11 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
     fun getUserByUsername(username: String) = userRepository.getUserByUsername(username)
 
     fun getAllMessagesOfUser(username: String, isAnonymous: Boolean): Flow<List<Message>> {
-        val anonymous = if(isAnonymous) 1 else 0
+        val anonymous = if (isAnonymous) 1 else 0
         return messageRepository.getAllMessagesOfUser(username, anonymous)
     }
 
-    suspend fun sendMessageToKnownUser(message: Message, receiverId: String){
-        messageRepository.sendMessageToKnownUser(message, receiverId)
+    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
+        messageRepository.sendMessageToKnownUser(message, receiverId, name)
     }
 }

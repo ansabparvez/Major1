@@ -20,16 +20,12 @@ import java.util.HashMap
 class MessageRepository(private val application: Application) {
 
     private val appDatabase = AppDatabase.getInstance(application)
-    private var lastMessageDao: LastMessageDao = appDatabase.lastMessageDao();
     private var messageDao = appDatabase.messageDao();
-
-    fun getAllLastMessages(isAnonymous: Int):
-            Flow<List<LastMessage>> = lastMessageDao.getAllLastMessages(isAnonymous)
 
     fun getAllMessagesOfUser(username: String, isAnonymous: Int):
             Flow<List<Message>> = messageDao.getAllMessagesOfUser(username, isAnonymous)
 
-    suspend fun sendMessageToKnownUser(message: Message, receiverId: String) {
+    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
         messageDao.insertMessage(message)
 
         val messageMap = HashMap<String, String>()

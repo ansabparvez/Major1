@@ -25,6 +25,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var rvChat: RecyclerView
     private lateinit var viewmodel: ChatViewModel
     private lateinit var userName: String
+Re    private lateinit var name: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
             .setOnClickListener { sendMessage() }
 
         userName = intent.getStringExtra("userName")!!
+        name = intent.getStringExtra("name")!!
 
         viewmodel.viewModelScope.launch {
             viewmodel.getUserByUsername(userName).collect {
@@ -81,7 +83,7 @@ class ChatActivity : AppCompatActivity() {
 
         etMessage.setText("")
         viewmodel.viewModelScope.launch {
-            viewmodel.sendMessageToKnownUser(message, userName)
+            viewmodel.sendMessageToKnownUser(message, userName, name)
         }
     }
 }

@@ -30,7 +30,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SentMessagesFragment : Fragment() {
+class SentMessagesFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View;
     private lateinit var viewModel: SentMessagesFragViewModel
 
@@ -64,57 +64,6 @@ class SentMessagesFragment : Fragment() {
         val appDatabase = AppDatabase.getInstance(requireContext())
         val lastMessageDao = appDatabase.lastMessageDao()
 
-//        GlobalScope.launch {
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab", "this is1 from ansab",
-//                    System.currentTimeMillis(), "Ansab Parvez", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 1 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_3", "this is 1 from ansab_3",
-//                    System.currentTimeMillis(), "Doe", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 2 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 3 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_4", "this is 1 from ansab_4",
-//                    System.currentTimeMillis(), "Yuk", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab", "this is last from ansab",
-//                    System.currentTimeMillis(), "Ansab Parvez", false
-//                )
-//            )
-//        }
-
         viewModel.viewModelScope.launch {
             viewModel.getAllUnAnonymousLastMessages().collect {
                 displayLastMessages(ArrayList(it))
@@ -144,6 +93,7 @@ class SentMessagesFragment : Fragment() {
             if (it.success) {
                 val intent = Intent(requireActivity(), ChatActivity::class.java)
                 intent.putExtra("userName", it.user?.userName)
+                intent.putExtra("name", it.user?.name);
                 startActivity(intent)
                 viewModel.viewModelScope.launch {
                     viewModel.insertUser(it.user!!);
@@ -163,9 +113,15 @@ class SentMessagesFragment : Fragment() {
         }
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview);
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
-        val sentMessagesAdapter = SentMessagesRVAdapter(messagesList)
+        val sentMessagesAdapter = SentMessagesRVAdapter(messagesList, this)
         rvLastMessages.adapter = sentMessagesAdapter
         sentMessagesAdapter.notifyDataSetChanged()
+    }
+
+    override fun onLastMessageClick(lastMessage: LastMessage) {
+        val intent = Intent(requireContext(), ChatActivity::class.java)
+        intent.putExtra("userName", lastMessage.userName)
+        intent.putExtra("name", lastMessage.name);
     }
 
 
