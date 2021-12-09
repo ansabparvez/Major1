@@ -25,7 +25,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var rvChat: RecyclerView
     private lateinit var viewmodel: ChatViewModel
     private lateinit var userName: String
-Re    private lateinit var name: String
+    private lateinit var name: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,19 +20,17 @@ import com.devansab.major1.R
 import com.devansab.major1.adapters.SentMessagesRVAdapter
 import com.devansab.major1.data.AppDatabase
 import com.devansab.major1.data.entities.LastMessage
-import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.utils.MainApplication
-import com.devansab.major1.viewmodels.SentMessagesFragViewModel
+import com.devansab.major1.viewmodels.KnownChatLastMsgsViewModel
 import com.devansab.major1.views.activities.ChatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SentMessagesFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
+class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View;
-    private lateinit var viewModel: SentMessagesFragViewModel
+    private lateinit var viewModel: KnownChatLastMsgsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +41,7 @@ class SentMessagesFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickL
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_sent_messages, container, false)
+        rootView = inflater.inflate(R.layout.fragment_known_chat_last_msgs, container, false)
 
         initViews();
         return rootView
@@ -59,7 +57,7 @@ class SentMessagesFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickL
         viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(MainApplication.instance)
-        )[SentMessagesFragViewModel::class.java]
+        )[KnownChatLastMsgsViewModel::class.java]
 
         val appDatabase = AppDatabase.getInstance(requireContext())
         val lastMessageDao = appDatabase.lastMessageDao()

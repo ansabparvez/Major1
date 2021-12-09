@@ -8,21 +8,27 @@ import com.devansab.major1.data.entities.User
 import com.devansab.major1.data.repositories.LastMessageRepository
 import com.devansab.major1.data.repositories.MessageRepository
 import com.devansab.major1.data.repositories.UserRepository
+import com.devansab.major1.utils.DebugLog
 import kotlinx.coroutines.flow.Flow
 
-class ReceivedMessagesFragViewModel(application: Application) : AndroidViewModel(application) {
+class KnownChatLastMsgsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userRepository = UserRepository(application)
     private val messageRepository = MessageRepository(application)
     private val lastMessageRepository = LastMessageRepository(application)
 
+    fun findUser(userName: String) {
+        DebugLog.i(this, "user to search: $userName")
+        userRepository.findUser(userName)
+    }
+
     fun getFindUserLiveData(): LiveData<UserRepository.FindUserModel> {
         return userRepository.getFindUserLiveData()
     }
 
-    fun getAllAnonymousLastMessages():
+    fun getAllUnAnonymousLastMessages():
     //Not anonymous, so provide 0 for room query
-            Flow<List<LastMessage>> = lastMessageRepository.getAllLastMessages(1)
+            Flow<List<LastMessage>> = lastMessageRepository.getAllLastMessages(0)
 
     suspend fun insertUser(user: User) {
         userRepository.insertUser(user)
