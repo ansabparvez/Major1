@@ -25,9 +25,12 @@ class MessageRepository(private val application: Application) {
     fun getAllMessagesOfUser(username: String, isAnonymous: Int):
             Flow<List<Message>> = messageDao.getAllMessagesOfUser(username, isAnonymous)
 
-    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
+    suspend fun insertMessage(message: Message) {
         messageDao.insertMessage(message)
+    }
 
+    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
+        insertMessage(message)
         val messageMap = HashMap<String, String>()
         messageMap["messageId"] = message.messageId
         messageMap["text"] = message.text

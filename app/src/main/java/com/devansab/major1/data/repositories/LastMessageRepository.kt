@@ -13,7 +13,7 @@ class LastMessageRepository(private val application: Application) {
     fun getAllLastMessages(isAnonymous: Int):
             Flow<List<LastMessage>> = lastMessageDao.getAllLastMessages(isAnonymous)
 
-    suspend fun updateLastMessage(lastMessage: LastMessage){
+    suspend fun updateLastMessage(lastMessage: LastMessage) {
         lastMessageDao.insertLastMessage(lastMessage)
     }
 }

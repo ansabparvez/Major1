@@ -20,7 +20,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class UnknownChatLastMsgsFragment : Fragment() {    private lateinit var rootView: View;
+class UnknownChatLastMsgsFragment : Fragment() {
+    private lateinit var rootView: View;
     private lateinit var viewModel: UnknownChatLastMsgsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
