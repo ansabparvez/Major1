@@ -25,6 +25,9 @@ class KnownUserChatActivity : AppCompatActivity() {
     private lateinit var viewmodel: KnownUserChatViewModel
     private lateinit var userName: String
     private lateinit var name: String
+    private var populated = false
+    private lateinit var adapter: ChatRVAdapter;
+    private val chatList = ArrayList<Message>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +51,31 @@ class KnownUserChatActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_chat_userName)
             .text = name
 
+        rvChat.layoutManager = LinearLayoutManager(baseContext)
+        adapter = ChatRVAdapter(chatList)
+        rvChat.adapter = adapter
+
         viewmodel.viewModelScope.launch {
             viewmodel.getAllMessagesOfUser(userName, false).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
-                displayChat(ArrayList(it))
+                displayChat(it)
             }
         }
     }
 
-    private fun displayChat(messages: ArrayList<Message>) {
-        rvChat.layoutManager = LinearLayoutManager(baseContext)
-        val chatAdapter = ChatRVAdapter(messages)
-        rvChat.adapter = chatAdapter
-        chatAdapter.notifyDataSetChanged()
+    private fun displayChat(list: List<Message>) {
+        if (list.isEmpty())
+            return
+
+        val prePos = chatList.size
+        val itemCount = list.size - prePos
+        if (!populated) {
+            chatList.addAll(list)
+            populated = true
+        } else
+            chatList.add(list[list.size - 1])
+        adapter.notifyItemRangeInserted(prePos, itemCount)
+        rvChat.scrollToPosition(chatList.size - 1)
     }
 
     private fun sendMessage() {
