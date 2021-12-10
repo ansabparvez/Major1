@@ -29,7 +29,7 @@ class MessageRepository(private val application: Application) {
         messageDao.insertMessage(message)
     }
 
-    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
+    suspend fun sendMessageToKnownUser(message: Message) {
         insertMessage(message)
         val messageMap = HashMap<String, String>()
         messageMap["messageId"] = message.messageId
@@ -37,10 +37,52 @@ class MessageRepository(private val application: Application) {
         messageMap["time"] = message.time.toString()
         messageMap["userName"] = SharedPrefManager.getInstance(application)
             .getUserData()[Const.KEY_USER_ANON_ID].toString();
-        messageMap["receiverId"] = receiverId
+        messageMap["receiverId"] = message.userName
 
         val messageUrl =
             "https://us-central1-major1-99a4c.cloudfunctions.net/messages/sendMessageToKnownUser"
+
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(Request.Method.POST, messageUrl, null,
+                Response.Listener { response ->
+                    DebugLog.i("ansab", response.toString())
+                },
+                Response.ErrorListener {
+                    DebugLog.i("ansab", it.localizedMessage)
+                }
+            ) {
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+
+                override fun getBody(): ByteArray {
+                    return JSONObject(messageMap as Map<String, String>).toString().toByteArray()
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    val token = SharedPrefManager.getInstance(application).getAuthToken();
+                    params["Authorization"] = "Bearer $token"
+                    params["Content-Type"] = "application/json"
+                    return params
+                }
+            };
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest);
+    }
+
+    suspend fun sendMessageToUnknownUser(message: Message) {
+        insertMessage(message)
+        val messageMap = HashMap<String, String>()
+        messageMap["messageId"] = message.messageId
+        messageMap["text"] = message.text
+        messageMap["time"] = message.time.toString()
+        messageMap["userName"] = SharedPrefManager.getInstance(application)
+            .getUserData()[Const.KEY_USER_UNAME].toString();
+        messageMap["receiverId"] = message.userName
+
+        val messageUrl =
+            "https://us-central1-major1-99a4c.cloudfunctions.net/messages/sendMessageToUnknownUser"
 
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.POST, messageUrl, null,

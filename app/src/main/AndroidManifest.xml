@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Major1">
         <activity
+            android:name=".views.activities.UnknownUserChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.UserRegistrationActivity"
             android:exported="false" />
         <activity

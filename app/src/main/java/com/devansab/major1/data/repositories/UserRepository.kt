@@ -48,7 +48,7 @@ class UserRepository(val application: Application) {
                     if (response.getBoolean("success")) {
                         isUserRegisteredLiveData.value =
                             response.getBoolean("registrationFinished")
-                        if(response.getBoolean("registrationFinished")){
+                        if (response.getBoolean("registrationFinished")) {
                             saveUserDataToSharedPref(response.getJSONObject("userData"))
                         }
                     } else {
@@ -120,7 +120,7 @@ class UserRepository(val application: Application) {
                 Response.Listener { response ->
                     DebugLog.i("ansab", response.toString())
                     userRegistrationLiveData.value = response.getBoolean("success")
-                    if(response.getBoolean("success")){
+                    if (response.getBoolean("success")) {
                         saveUserDataToSharedPref(response.getJSONObject("userData"))
                     }
                 },
@@ -180,11 +180,11 @@ class UserRepository(val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    suspend fun insertUser(user: User){
-         userDao.insertUser(user)
+    suspend fun insertUser(user: User) {
+        userDao.insertUser(user)
     }
 
-    fun getUserByUsername(username : String) = userDao.getUserByUsername(username)
+    fun getUserByUsername(username: String) = userDao.getUserByUsername(username)
 
     data class FindUserModel(
         val success: Boolean,
@@ -192,7 +192,7 @@ class UserRepository(val application: Application) {
         var user: User? = null
     )
 
-    private fun saveUserDataToSharedPref(userData: JSONObject){
+    private fun saveUserDataToSharedPref(userData: JSONObject) {
         val userDataMap = HashMap<String, String>();
         userDataMap[Const.KEY_USER_NAME] = userData.getString("name")
         userDataMap[Const.KEY_USER_UNAME] = userData.getString("userName")
