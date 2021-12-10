@@ -31,7 +31,6 @@ class SentMessagesRVAdapter(
         return lastMessage.size;
     }
 
-
     //View Holder Class
     inner class MessageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvName: TextView = itemView.findViewById(R.id.tv_listChat_name);
@@ -43,7 +42,6 @@ class SentMessagesRVAdapter(
                 listener.onLastMessageClick(lastMessage[absoluteAdapterPosition])
             }
         }
-
     }
 
     interface LastMessageClickListener {

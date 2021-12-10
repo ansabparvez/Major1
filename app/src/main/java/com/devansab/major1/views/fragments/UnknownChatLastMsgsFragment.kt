@@ -1,5 +1,6 @@
 package com.devansab.major1.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,11 +17,13 @@ import com.devansab.major1.data.AppDatabase
 import com.devansab.major1.data.entities.LastMessage
 import com.devansab.major1.utils.MainApplication
 import com.devansab.major1.viewmodels.UnknownChatLastMsgsViewModel
+import com.devansab.major1.views.activities.KnownUserChatActivity
+import com.devansab.major1.views.activities.UnknownUserChatActivity
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class UnknownChatLastMsgsFragment : Fragment() {
+class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View;
     private lateinit var viewModel: UnknownChatLastMsgsViewModel
 
@@ -113,8 +116,14 @@ class UnknownChatLastMsgsFragment : Fragment() {
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_reMsg_chatPreview);
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
-        val sentMessagesAdapter = ReceivedMessagesRVAdapter(messagesList)
+        val sentMessagesAdapter = ReceivedMessagesRVAdapter(messagesList, this)
         rvLastMessages.adapter = sentMessagesAdapter
         sentMessagesAdapter.notifyDataSetChanged()
+    }
+
+    override fun onLastMessageClick(lastMessage: LastMessage) {
+        val intent = Intent(requireContext(), UnknownUserChatActivity::class.java)
+        intent.putExtra("userName", lastMessage.userName)
+        startActivity(intent)
     }
 }

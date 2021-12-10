@@ -55,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            DebugLog.i("ansab", it)
+            DebugLog.i("ansab fcm token", it)
         }
     }
 }
