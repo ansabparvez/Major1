@@ -14,7 +14,6 @@ import com.devansab.major1.adapters.ChatRVAdapter
 import com.devansab.major1.data.entities.Message
 import com.devansab.major1.utils.DebugLog
 import com.devansab.major1.viewmodels.KnownUserChatViewModel
-import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -46,17 +45,11 @@ class KnownUserChatActivity : AppCompatActivity() {
 
         userName = intent.getStringExtra("userName")!!
         name = intent.getStringExtra("name")!!
-
-        viewmodel.viewModelScope.launch {
-            viewmodel.getUserByUsername(userName).collect {
-                findViewById<TextView>(R.id.tv_chat_userName)
-                    .text = it.name
-            }
-        }
+        findViewById<TextView>(R.id.tv_chat_userName)
+            .text = name
 
         viewmodel.viewModelScope.launch {
             viewmodel.getAllMessagesOfUser(userName, false).collect {
-                Toasty.success(baseContext, "size: ${it.size}").show()
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(ArrayList(it))
             }
@@ -83,7 +76,7 @@ class KnownUserChatActivity : AppCompatActivity() {
 
         etMessage.setText("")
         viewmodel.viewModelScope.launch {
-            viewmodel.sendMessageToKnownUser(message, userName, name)
+            viewmodel.sendMessage(message, name)
         }
     }
 }

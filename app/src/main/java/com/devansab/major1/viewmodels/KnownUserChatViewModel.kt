@@ -21,9 +21,9 @@ class KnownUserChatViewModel(application: Application) : AndroidViewModel(applic
         return messageRepository.getAllMessagesOfUser(username, anonymous)
     }
 
-    suspend fun sendMessageToKnownUser(message: Message, receiverId: String, name: String) {
-        val lastMessage = LastMessage(receiverId, message.text, message.time, name, false)
+    suspend fun sendMessage(message: Message, name: String) {
+        val lastMessage = LastMessage(message.userName, message.text, message.time, name, false)
         lastMessageRepository.updateLastMessage(lastMessage)
-        messageRepository.sendMessageToKnownUser(message, receiverId, name)
+        messageRepository.sendMessageToKnownUser(message)
     }
 }
