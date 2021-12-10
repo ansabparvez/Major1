@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.SettingsFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_settings_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/color_toolbar_text"
+        android:background="@color/color_toolbar_background"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
