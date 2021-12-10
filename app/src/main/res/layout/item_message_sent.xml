@@ -2,33 +2,39 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_marginStart="70dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
     android:layout_marginEnd="15dp"
-    android:background="@drawable/shape_rect_clr_primary"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
 
-
-    <TextView
-        android:id="@+id/tv_msgSent_message"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="msg sdfsdfs  ffs dsfsdfdssss ss sss ss dsfd fdsdf fdsf ssfdsafdsf f f sdsfdfdsafds fsf sfs sdfsd f dff dfdfs re e dfgdfgfdd dfd fdsf"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_msgSent_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="11:45 am"
-        android:textSize="12sp"
-        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_rect_clr_primary"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_msgSent_message" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_msgSent_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mdfd jkl dsd dfgfgdf gdfgdfgdfg dfgdfgdf dsf fgdfgdf sdfsdf sdfsd sddfs"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_msgSent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:45 am"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_msgSent_message" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
