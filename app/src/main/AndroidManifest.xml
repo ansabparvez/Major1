@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Major1">
+        android:theme="@style/Theme.Begnn">
         <activity
             android:name="com.devansab.begnn.views.activities.UnknownUserChatActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
