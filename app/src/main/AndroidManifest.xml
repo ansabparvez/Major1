@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.devansab.major1">
+    package="begnn">
 
     <application
-        android:name=".utils.MainApplication"
+        android:name="com.devansab.begnn.utils.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,24 +11,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Major1">
         <activity
-            android:name=".views.activities.UnknownUserChatActivity"
+            android:name="com.devansab.begnn.views.activities.UnknownUserChatActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".views.activities.UserRegistrationActivity"
+            android:name="com.devansab.begnn.views.activities.UserRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.LoginActivity"
+            android:name="com.devansab.begnn.views.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.KnownUserChatActivity"
+            android:name="com.devansab.begnn.views.activities.KnownUserChatActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".views.activities.HomeActivity"
+            android:name="com.devansab.begnn.views.activities.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".views.activities.MainActivity"
+            android:name="com.devansab.begnn.views.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
         </activity>
 
         <service
-            android:name=".services.AppFirebaseMessagingService"
+            android:name="com.devansab.begnn.services.AppFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
