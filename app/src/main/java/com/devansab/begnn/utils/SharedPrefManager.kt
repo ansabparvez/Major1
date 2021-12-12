@@ -18,7 +18,7 @@ class SharedPrefManager {
         fun getInstance(context: Context): SharedPrefManager {
             if (!this::sharedPreferences.isInitialized || !this::instance.isInitialized) {
                 instance = SharedPrefManager();
-                sharedPreferences = context.getSharedPreferences("Major1", MODE_PRIVATE);
+                sharedPreferences = context.getSharedPreferences("Begnn", MODE_PRIVATE);
             }
             return instance;
         }
