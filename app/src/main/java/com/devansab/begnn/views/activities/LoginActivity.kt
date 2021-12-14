@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.devansab.begnn.R
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.utils.UnitConverter
 import com.devansab.begnn.viewmodels.LoginViewModel
