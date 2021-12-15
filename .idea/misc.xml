@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3398148148148148" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/aa.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_chat_recv_msg.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_chat_send.xml" value="0.23778501628664495" />
@@ -24,7 +25,7 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_known_user_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22039473684210525" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_java.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_unknown_user_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_user_registration.xml" value="0.22039473684210525" />

@@ -3,6 +3,8 @@ package com.devansab.begnn.views.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.viewmodels.MainViewModel
 import com.devansab.begnn.R
@@ -14,6 +16,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Handler(Looper.myLooper()!!).postDelayed({
+            initViews();
+        }, 3000)
+    }
+
+    private fun initViews(){
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
