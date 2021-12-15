@@ -30,12 +30,12 @@ class MainApplication : Application() {
         DebugLog.i("main application", "adding token listener")
         val user = FirebaseAuth.getInstance().currentUser ?: return;
 
-        FirebaseAuth.getInstance().addIdTokenListener(FirebaseAuth.IdTokenListener { it ->
-            it.getAccessToken(true).addOnSuccessListener { res ->
-                val token = res.token
-                DebugLog.i("ansab", "token listener: $token")
-                SharedPrefManager.getInstance(this).setAuthToken(token);
-            }
-        })
+//        FirebaseAuth.getInstance().addIdTokenListener(FirebaseAuth.IdTokenListener { it ->
+//            it.getAccessToken(true).addOnSuccessListener { res ->
+//                val token = res.token
+//                DebugLog.i("ansab", "token listener: $token")
+//                //SharedPrefManager.getInstance(this).setAuthToken(token);
+//            }
+//        })
     }
 }

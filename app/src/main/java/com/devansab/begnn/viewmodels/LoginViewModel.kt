@@ -17,4 +17,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         return userRepository.getRegisterUserLiveData()
     }
 
+    public fun updateFcmToken(){
+        userRepository.fetchAndUpdateFcmToken()
+    }
+
 }

@@ -15,6 +15,7 @@ import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONObject
 import java.util.HashMap
 
@@ -30,8 +31,8 @@ class UserRepository(val application: Application) {
     public fun isUserRegistered() {
         val user = FirebaseAuth.getInstance().currentUser ?: return;
         DebugLog.i(this, "getting token")
-        user.getIdToken(false).addOnSuccessListener {
-            DebugLog.i("ansab", "token: " + it.token);
+        user.getIdToken(true).addOnSuccessListener {
+            DebugLog.i("ansab", "auth token: " + it.token);
             checkRegisteredUser(it.token.toString())
             SharedPrefManager.getInstance(application).setAuthToken(it.token.toString());
         }
@@ -40,7 +41,7 @@ class UserRepository(val application: Application) {
 
     private fun checkRegisteredUser(token: String) {
         val url =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/userV1/isRegistrationFinished"
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/isRegistrationFinished"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
@@ -63,7 +64,7 @@ class UserRepository(val application: Application) {
                     params["Content-Type"] = "application/json"
                     return params
                 }
-            };
+            }
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
@@ -85,7 +86,7 @@ class UserRepository(val application: Application) {
 
     public fun checkUserNameAvailable(userName: String) {
         val url =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/userV1/isUserNameAvailable?userName=$userName"
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/isUserNameAvailable?userName=$userName"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
@@ -113,7 +114,7 @@ class UserRepository(val application: Application) {
 
     public fun registerUser(userData: HashMap<String, String>) {
         val url =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/userV1/completeRegistration"
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/completeRegistration"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.POST, url, null,
                 Response.Listener { response ->
@@ -147,7 +148,7 @@ class UserRepository(val application: Application) {
 
     public fun findUser(userName: String) {
         val url =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/userV1/findUser?userName=$userName"
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/findUser?userName=$userName"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
@@ -199,6 +200,44 @@ class UserRepository(val application: Application) {
 
         SharedPrefManager.getInstance(application).setUserData(userDataMap);
         DebugLog.i("ansab", userDataMap.toString());
+    }
+
+    public fun fetchAndUpdateFcmToken(){
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            updateFcmToken(it!!)
+        }
+    }
+
+    private fun updateFcmToken(token: String){
+        val userData = HashMap<String, String>()
+        userData["fcmToken"] = token;
+        val url =
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/updateFcmToken"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(Request.Method.POST, url, null,
+                Response.Listener { response ->
+                    DebugLog.i("ansab", response.toString())
+                },
+                Response.ErrorListener { }
+            ) {
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+
+                override fun getBody(): ByteArray {
+                    return JSONObject(userData as Map<String, String>).toString().toByteArray()
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    val authToken = SharedPrefManager.getInstance(application).getAuthToken();
+                    params["Authorization"] = "Bearer $authToken"
+                    params["Content-Type"] = "application/json"
+                    return params
+                }
+            };
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest);
     }
 
 }

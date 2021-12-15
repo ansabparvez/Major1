@@ -7,24 +7,48 @@
     android:background="@color/color_background_light"
     tools:context=".views.activities.LoginActivity">
 
-    <ImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/iv_login_topBackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/color_primary"
         app:layout_constraintDimensionRatio="5:3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <TextView
-        android:id="@+id/tv_login_appName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Major 1"
-        android:textAlignment="center"
-        android:textColor="@color/color_background"
-        android:textSize="36sp"
-        app:layout_constraintTop_toTopOf="@id/iv_login_topBackground" />
+        <ImageView
+            android:id="@+id/card_login_appLogo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:2"
+            android:src="@drawable/app_logo_white"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_login_appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begnn"
+            android:textSize="30sp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/card_login_appLogo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begin your..."
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/tv_login_appName"
+            app:layout_constraintTop_toBottomOf="@id/tv_login_appName"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_login_signInMethods"
@@ -66,6 +90,8 @@
                 app:ccp_autoDetectCountry="true"
                 app:ccp_autoDetectLanguage="true"
                 app:ccp_textSize="16sp"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false"
                 app:ccp_defaultNameCode="in"
                 app:layout_constraintBottom_toBottomOf="@+id/ti_login_phoneTi"
                 app:layout_constraintStart_toStartOf="parent"

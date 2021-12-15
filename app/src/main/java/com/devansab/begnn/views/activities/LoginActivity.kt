@@ -44,12 +44,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        countryCodePicker = findViewById(R.id.view_login_ccp)
+        countryCodePicker.registerCarrierNumberEditText(
+            findViewById<EditText>(R.id.et_login_phoneNumb)
+        )
         val googleSignInBtn = findViewById<SignInButton>(R.id.btn_login_googleSignInBtn)
 
         val alertDialogLayout = LayoutInflater.from(this)
             .inflate(R.layout.layout_waiting_progress_dialog, null)
         alertDialog = MaterialAlertDialogBuilder(this)
             .setView(alertDialogLayout)
+            .setCancelable(false)
             .create()
 
         progressTitle = alertDialogLayout.findViewById(R.id.tv_lwpd_title)
@@ -87,10 +92,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun onSendOtpClick() {
-        countryCodePicker = findViewById(R.id.view_login_ccp)
-        val etPhoneNum = findViewById<EditText>(R.id.et_login_phoneNumb);
-        countryCodePicker.registerCarrierNumberEditText(etPhoneNum)
-
         if (!countryCodePicker.isValidFullNumber) {
             Toasty.error(baseContext, "Phone number is not valid.").show()
             return
@@ -172,6 +173,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setUserRegistrationObserver() {
         viewModel.getRegisterUserLiveData().observe(this, Observer { isRegistered ->
             if (isRegistered) {
+                viewModel.updateFcmToken();
                 startActivity(Intent(baseContext, HomeActivity::class.java))
                 alertDialog?.cancel()
                 finish()
