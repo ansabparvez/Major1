@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Handler(Looper.myLooper()!!).postDelayed({
-            initViews();
-        }, 3000)
+            initViews()
+        }, 1000)
     }
 
-    private fun initViews(){
+    private fun initViews() {
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
@@ -44,14 +44,19 @@ class MainActivity : AppCompatActivity() {
             if (isRegistered) {
                 DebugLog.i(this, "user is registered");
                 val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+                startFinalActivity(intent)
             } else {
                 DebugLog.i(this, "user is not registered");
                 val intent = Intent(this, UserRegistrationActivity::class.java)
-                startActivity(intent)
-                finish()
+                startFinalActivity(intent)
             }
         })
+    }
+
+    private fun startFinalActivity(intent: Intent) {
+        Handler(Looper.myLooper()!!).postDelayed({
+            startActivity(intent)
+            finish()
+        }, 2000)
     }
 }
