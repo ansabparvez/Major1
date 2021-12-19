@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowBackground">@color/color_primary</item>
+        <item name="android:windowBackground">@color/color_background</item>
     </style>
 
     <style name="Theme.ToolBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
