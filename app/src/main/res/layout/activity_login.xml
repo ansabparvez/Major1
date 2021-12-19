@@ -13,31 +13,31 @@
         android:layout_height="0dp"
         android:background="@color/color_primary"
         app:layout_constraintDimensionRatio="5:3"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/card_login_appLogo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:2"
-            android:src="@drawable/app_logo_white"
-            android:layout_marginBottom="20dp"
             android:layout_marginStart="40dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/app_logo_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_login_appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Begnn"
-            android:textSize="30sp"
             android:layout_marginStart="20dp"
+            android:text="Begnn"
             android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_login_appLogo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/tv_login_appName"
-            app:layout_constraintTop_toBottomOf="@id/tv_login_appName"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_login_appName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,41 +78,42 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/view_login_ccp"
-                style="@style/Theme.Begnn"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_login_phoneNumberHolder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:background="@color/color_background"
-                app:ccpDialog_allowSearch="true"
-                app:ccpDialog_textColor="@color/color_text_dark"
-                app:ccp_autoDetectCountry="true"
-                app:ccp_autoDetectLanguage="true"
-                app:ccp_textSize="16sp"
-                app:ccp_showFlag="false"
-                app:ccp_showNameCode="false"
-                app:ccp_defaultNameCode="in"
-                app:layout_constraintBottom_toBottomOf="@+id/ti_login_phoneTi"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ti_login_phoneTi" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_login_phoneTi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/color_background"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_rect_border_light_grey_color"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/view_login_ccp"
+                android:paddingVertical="5dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_login_login">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/view_login_ccp"
+                    style="@style/Theme.Begnn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/color_background"
+                    app:ccpDialog_allowSearch="true"
+                    app:ccpDialog_textColor="@color/color_text_dark"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_autoDetectLanguage="true"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/ti_addUser_phoneTi"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ti_addUser_phoneTi" />
 
                 <EditText
                     android:id="@+id/et_login_phoneNumb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     android:background="@color/color_background"
                     android:hint="Phone Number"
                     android:imeOptions="actionDone"
@@ -121,24 +122,25 @@
                     android:textColor="@color/color_text_dark"
                     android:textColorHint="@color/color_text_light" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login_sendOTP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/color_primary"
+                android:background="@color/color_background"
+                android:elevation="10dp"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="Get OTP"
                 android:textAllCaps="false"
-                android:textColor="@color/color_background"
+                android:textColor="@color/color_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ti_login_phoneTi" />
+                app:layout_constraintTop_toBottomOf="@id/ll_login_phoneNumberHolder" />
 
             <View
                 android:id="@+id/view_login_divider1"
@@ -220,36 +222,23 @@
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_login_enterOTP" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_login_otpTi"
-                android:layout_width="0dp"
+            <com.devansab.begnn.utils.OtpEditText
+                android:id="@+id/et_login_otp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="100dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/color_background"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_login_optSentNumb">
-
-                <EditText
-                    android:id="@+id/et_login_otp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/color_background"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="OTP"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:maxLength="8"
-                    android:maxLines="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/color_text_dark"
-                    android:textColorHint="@color/color_text_light" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:gravity="center"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_login_optSentNumb" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login_submitOTP"
@@ -266,7 +255,7 @@
                 android:textColor="@color/color_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ti_login_otpTi" />
+                app:layout_constraintTop_toBottomOf="@id/et_login_otp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

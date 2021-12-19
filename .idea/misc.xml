@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/drawable/selector_home_received_messages.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/selector_home_sent_messages.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/selector_home_settings_messages.xml" value="0.23778501628664495" />
+        <entry key="app/src/main/res/drawable/shape_rect_border_light_grey_color.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/shape_rect_clr_bkgnd.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2299342105263158" />
