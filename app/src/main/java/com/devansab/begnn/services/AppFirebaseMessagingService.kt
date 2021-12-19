@@ -16,9 +16,10 @@ import kotlinx.coroutines.launch
 class AppFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        DebugLog.i(this, "fcm token: " + token)
+        DebugLog.i(this, "on new fcm token: $token")
         super.onNewToken(token)
         SharedPrefManager.getInstance(baseContext).setFCMToken(token)
+        UserRepository(application).updateFcmToken(token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

@@ -208,7 +208,7 @@ class UserRepository(val application: Application) {
         }
     }
 
-    private fun updateFcmToken(token: String){
+    public fun updateFcmToken(token: String){
         val userData = HashMap<String, String>()
         userData["fcmToken"] = token;
         val url =
