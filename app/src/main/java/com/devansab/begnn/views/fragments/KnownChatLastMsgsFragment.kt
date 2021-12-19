@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -105,10 +106,14 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
 
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
         if (messagesList.size == 0) {
-            rootView.findViewById<TextView>(R.id.tv_sentMsg_noChatsText)
+            rootView.findViewById<ConstraintLayout>(R.id.constraintLayout_sentMsg_noMessage)
                 .visibility = View.VISIBLE
+            rootView.findViewById<Button>(R.id.btn_sentMsg_searchUser)
+                .setOnClickListener { showFindUserPopUp() }
             return
         }
+        rootView.findViewById<ConstraintLayout>(R.id.constraintLayout_sentMsg_noMessage)
+            .visibility = View.GONE
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview);
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
         val sentMessagesAdapter = SentMessagesRVAdapter(messagesList, this)

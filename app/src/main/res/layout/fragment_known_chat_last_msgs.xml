@@ -14,19 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/color_toolbar_text" />
 
-    <TextView
-        android:id="@+id/tv_sentMsg_noChatsText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="100dp"
-        android:text="You do not have any chats.\nUse the search button to search for a user and start the conversation."
-        android:textAlignment="center"
-        android:textColor="@color/color_primary"
-        android:textSize="18sp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_sentMsg_toolbar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sentMsg_chatPreview"
         android:layout_width="match_parent"
@@ -36,16 +23,65 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_sentMsg_toolbar"
         tools:listitem="@layout/item_list_chat" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_sentMsg_noMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_sentMsg_toolbar">
+
+        <TextView
+            android:id="@+id/tv_sentMsg_noChatsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="100dp"
+            android:text="Lets make a move, and begin your..."
+            android:textAlignment="center"
+            android:textColor="@color/color_primary"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_sentMsg_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sentMsg_noChatsText"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/send_message_animation" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sentMsg_searchUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_primary"
+            android:paddingHorizontal="20dp"
+            android:text="Search a name and begin your..."
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/lottie_sentMsg_animation"
+            app:layout_constraintStart_toStartOf="@id/lottie_sentMsg_animation"
+            app:layout_constraintTop_toBottomOf="@id/lottie_sentMsg_animation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_sentMsg_findUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/color_primary"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_primary"
         android:src="@drawable/ic_sent_messages_person_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/color_background" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
