@@ -7,6 +7,7 @@ import com.devansab.begnn.data.repositories.MessageRepository
 import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.utils.SharedPrefManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.GlobalScope
@@ -18,6 +19,8 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         DebugLog.i(this, "on new fcm token: $token")
         super.onNewToken(token)
+        if (FirebaseAuth.getInstance().currentUser == null)
+            return
         SharedPrefManager.getInstance(baseContext).setFCMToken(token)
         UserRepository(application).updateFcmToken(token)
     }
@@ -33,6 +36,8 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun parseMessage(messageData: Map<String, String>) {
+        if (FirebaseAuth.getInstance().currentUser == null)
+            return
         val messageId = messageData["messageId"]!!
         val text = messageData["text"]!!
         val time = messageData["time"]!!.toLong()
