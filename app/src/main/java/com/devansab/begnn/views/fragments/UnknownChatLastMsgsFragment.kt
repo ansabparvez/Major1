@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.adapters.ReceivedMessagesRVAdapter
 import com.devansab.begnn.data.AppDatabase
-import com.devansab.begnn.data.entities.LastMessage
+import com.devansab.begnn.data.LastMessage
 import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.viewmodels.UnknownChatLastMsgsViewModel
 import com.devansab.begnn.views.activities.UnknownUserChatActivity
@@ -25,10 +25,6 @@ import kotlinx.coroutines.launch
 class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View;
     private lateinit var viewModel: UnknownChatLastMsgsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,57 +50,6 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
         val appDatabase = AppDatabase.getInstance(requireContext())
         val lastMessageDao = appDatabase.lastMessageDao()
 
-//        GlobalScope.launch {
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab", "this is1 from ansab",
-//                    System.currentTimeMillis(), "Ansab Parvez", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 1 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_3", "this is 1 from ansab_3",
-//                    System.currentTimeMillis(), "Doe", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 2 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_2", "this is 3 from ansab_2",
-//                    System.currentTimeMillis(), "John", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab_4", "this is 1 from ansab_4",
-//                    System.currentTimeMillis(), "Yuk", false
-//                )
-//            )
-//
-//            lastMessageDao.insertLastMessage(
-//                LastMessage(
-//                    "ansab", "this is last from ansab",
-//                    System.currentTimeMillis(), "Ansab Parvez", false
-//                )
-//            )
-//        }
-
         viewModel.viewModelScope.launch {
             viewModel.getAllAnonymousLastMessages().collect {
                 displayLastMessages(ArrayList(it))
@@ -122,7 +67,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
 
     override fun onLastMessageClick(lastMessage: LastMessage) {
         val intent = Intent(requireContext(), UnknownUserChatActivity::class.java)
-        intent.putExtra("userName", lastMessage.userName)
+        intent.putExtra("userName", lastMessage.message.userName)
         startActivity(intent)
     }
 }
