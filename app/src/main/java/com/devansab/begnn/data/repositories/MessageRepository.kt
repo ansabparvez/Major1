@@ -6,6 +6,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.devansab.begnn.data.AppDatabase
+import com.devansab.begnn.data.LastMessage
 import com.devansab.begnn.data.entities.Message
 import com.devansab.begnn.utils.Const
 import com.devansab.begnn.utils.DebugLog
@@ -38,7 +39,7 @@ class MessageRepository(private val application: Application) {
         messageMap["receiverId"] = message.userName
 
         val messageUrl =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/messages/sendMessageToKnownUser"
+            "https://us-central1-begnn-app.cloudfunctions.net/messages/sendMessageToKnownUser"
 
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.POST, messageUrl, null,
@@ -46,7 +47,7 @@ class MessageRepository(private val application: Application) {
                     DebugLog.i("ansab", response.toString())
                 },
                 Response.ErrorListener {
-                    DebugLog.i("ansab", it.localizedMessage)
+                    //DebugLog.i("ansab", it.localizedMessage)
                 }
             ) {
                 override fun getBodyContentType(): String {
@@ -80,7 +81,7 @@ class MessageRepository(private val application: Application) {
         messageMap["receiverId"] = message.userName
 
         val messageUrl =
-            "https://us-central1-major1-99a4c.cloudfunctions.net/messages/sendMessageToUnknownUser"
+            "https://us-central1-begnn-app.cloudfunctions.net/messages/sendMessageToUnknownUser"
 
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(Request.Method.POST, messageUrl, null,
@@ -110,4 +111,7 @@ class MessageRepository(private val application: Application) {
             };
         MainApplication.instance.addToRequestQueue(jsonObjectRequest);
     }
+
+    fun getAllLastMessages(isAnonymous: Int):
+            Flow<List<LastMessage>> = messageDao.getAllLastMessages(isAnonymous)
 }

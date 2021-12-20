@@ -8,8 +8,15 @@ import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.viewmodels.MainViewModel
 import com.devansab.begnn.R
+import com.devansab.begnn.data.entities.Message
+import com.devansab.begnn.data.entities.User
+import com.devansab.begnn.data.repositories.MessageRepository
+import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +26,79 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.myLooper()!!).postDelayed({
             initViews()
         }, 1000)
+
+
+        /*val message = Message(
+            UUID.randomUUID().toString(), "this is message 1",
+            System.currentTimeMillis(), "test", false, false
+        );
+
+        val message2 = Message(
+            UUID.randomUUID().toString(), "this is message 2",
+            System.currentTimeMillis(), "test", false, false
+        );
+
+        val message3 = Message(
+            UUID.randomUUID().toString(), "this is message 3",
+            System.currentTimeMillis(), "test", true, false
+        );
+
+        val message4 = Message(
+            UUID.randomUUID().toString(), "this is message 4",
+            System.currentTimeMillis(), "test", true, false
+        );
+
+        val message5 = Message(
+            UUID.randomUUID().toString(), "this is message 5",
+            System.currentTimeMillis(), "test", false, false
+        );
+
+        val message6 = Message(
+            UUID.randomUUID().toString(), "this is message 6",
+            System.currentTimeMillis(), "test", true, false
+        );
+
+        val message7 = Message(
+            UUID.randomUUID().toString(), "this is message 7",
+            System.currentTimeMillis(), "test", true, false
+        );
+
+        val message8 = Message(
+            UUID.randomUUID().toString(), "this is message 8",
+            System.currentTimeMillis(), "test", false, false
+        );
+
+        val message9 = Message(
+            UUID.randomUUID().toString(), "this is message 9",
+            System.currentTimeMillis(), "test", false, false
+        );
+
+        val message10 = Message(
+            UUID.randomUUID().toString(), "this is message 10",
+            System.currentTimeMillis(), "test", true, false
+        );
+
+        GlobalScope.launch {
+            MessageRepository(application).insertMessage(message)
+            MessageRepository(application).insertMessage(message2)
+            MessageRepository(application).insertMessage(message3)
+            MessageRepository(application).insertMessage(message4)
+            MessageRepository(application).insertMessage(message5)
+            MessageRepository(application).insertMessage(message6)
+            MessageRepository(application).insertMessage(message7)
+            MessageRepository(application).insertMessage(message8)
+            MessageRepository(application).insertMessage(message9)
+            MessageRepository(application).insertMessage(message10)
+        }*/
+
+        /*GlobalScope.launch {
+            UserRepository(application).insertUser(
+                User("ansab", "Ansab Parvez", false)
+            )
+            UserRepository(application).insertUser(
+                User("test", "Mr. Test", false)
+            )
+        }*/
     }
 
     private fun initViews() {

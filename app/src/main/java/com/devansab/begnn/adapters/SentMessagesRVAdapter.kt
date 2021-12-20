@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
-import com.devansab.begnn.data.entities.LastMessage
+import com.devansab.begnn.data.LastMessage
 
 class SentMessagesRVAdapter(
-    private val lastMessage: List<LastMessage>,
+    private val lastMessagesList: List<LastMessage>,
     private val listener: LastMessageClickListener
 ) :
     RecyclerView.Adapter<SentMessagesRVAdapter.MessageHolder>() {
@@ -21,14 +21,14 @@ class SentMessagesRVAdapter(
     }
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
-        val message = lastMessage[position];
-        holder.tvName.text = message.name
-        holder.tvDate.text = message.time.toString()
-        holder.tvMessage.text = message.text
+        val lastMessage = lastMessagesList[position];
+        holder.tvName.text = lastMessage.name
+        holder.tvDate.text = lastMessage.message.time.toString()
+        holder.tvMessage.text = lastMessage.message.text
     }
 
     override fun getItemCount(): Int {
-        return lastMessage.size;
+        return lastMessagesList.size;
     }
 
     //View Holder Class
@@ -39,7 +39,7 @@ class SentMessagesRVAdapter(
 
         init {
             itemView.setOnClickListener {
-                listener.onLastMessageClick(lastMessage[absoluteAdapterPosition])
+                listener.onLastMessageClick(lastMessagesList[absoluteAdapterPosition])
             }
         }
     }

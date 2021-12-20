@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.adapters.SentMessagesRVAdapter
 import com.devansab.begnn.data.AppDatabase
-import com.devansab.begnn.data.entities.LastMessage
+import com.devansab.begnn.data.LastMessage
 import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.viewmodels.KnownChatLastMsgsViewModel
 import com.devansab.begnn.views.activities.KnownUserChatActivity
@@ -52,8 +52,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         val toolbar: Toolbar? = rootView.findViewById(R.id.toolbar_sentMsg_toolbar)
         rootView.findViewById<FloatingActionButton>(R.id.fab_sentMsg_findUser)
             .setOnClickListener { showFindUserPopUp() }
-        //(activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar?.title = "Sent Messages"
+        toolbar?.title = "People I Know"
 
         viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
@@ -61,7 +60,6 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         )[KnownChatLastMsgsViewModel::class.java]
 
         val appDatabase = AppDatabase.getInstance(requireContext())
-        val lastMessageDao = appDatabase.lastMessageDao()
 
         viewModel.viewModelScope.launch {
             viewModel.getAllUnAnonymousLastMessages().collect {
@@ -123,7 +121,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
 
     override fun onLastMessageClick(lastMessage: LastMessage) {
         val intent = Intent(requireContext(), KnownUserChatActivity::class.java)
-        intent.putExtra("userName", lastMessage.userName)
+        intent.putExtra("userName", lastMessage.message.userName)
         intent.putExtra("name", lastMessage.name)
         startActivity(intent)
     }
