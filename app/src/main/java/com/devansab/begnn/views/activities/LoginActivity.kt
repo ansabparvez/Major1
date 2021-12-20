@@ -1,5 +1,6 @@
 package com.devansab.begnn.views.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +11,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.R
 import com.devansab.begnn.utils.DebugLog
@@ -24,7 +24,7 @@ import com.hbb20.CountryCodePicker
 import es.dmoral.toasty.Toasty
 import java.util.concurrent.TimeUnit
 
-//eyJhbGciOiJSUzI1NiIsImtpZCI6IjE1MjU1NWEyMjM3MWYxMGY0ZTIyZjFhY2U3NjJmYzUwZmYzYmVlMGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWFqb3IxLTk5YTRjIiwiYXVkIjoibWFqb3IxLTk5YTRjIiwiYXV0aF90aW1lIjoxNjM1NDQxMjgxLCJ1c2VyX2lkIjoiQlpQeW1UaEFWaVNhYm9BZ3dDd0JzNjk5bnoyMyIsInN1YiI6IkJaUHltVGhBVmlTYWJvQWd3Q3dCczY5OW56MjMiLCJpYXQiOjE2MzU1MTcyMTQsImV4cCI6MTYzNTUyMDgxNCwicGhvbmVfbnVtYmVyIjoiKzkxMTIzNDU2Nzg5MCIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzkxMTIzNDU2Nzg5MCJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.YarHujc_ry-zcslIeX7BniBl8CGDvfEIzeIqw19jotfTq8tIbNNTqUnvkJWEGQGPmf2tcZRQxOxMXmLeTC3B_20XdS3mCeWd6radrvDFaIQqMOTj40iML1eLxm6TIlopVPQ6-zD7af3jYReVhGGFrqKNz8geVnoGHldYm1-fEIBpO_TsmGjMa8QyUxS9or58OtVIibIjy3Q9m6Koe-vo9EA-3MDw7UGNr2UfoPx-FAVs5yib-5QdLXxXkGxgwdfkOSEE64xKn88VDjBrsDRnir-cY3lsnGQN4Bsk4-xWKvm2f0uQdSe3bukdZblaq4NDxc1lUG2TaiNF80qmK4RqWA
+@SuppressLint("SetTextI18n")
 class LoginActivity : AppCompatActivity() {
 
     private var storedVerificationId: String? = null
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
     private var progressMessage: TextView? = null
     private val TAG = this::class.java.simpleName + "TAG"
     private lateinit var viewModel: LoginViewModel
-    private lateinit var countryCodePicker: CountryCodePicker;
+    private lateinit var countryCodePicker: CountryCodePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initViews() {
         countryCodePicker = findViewById(R.id.view_login_ccp)
         countryCodePicker.registerCarrierNumberEditText(
-            findViewById<EditText>(R.id.et_login_phoneNumb)
+            findViewById(R.id.et_login_phoneNumb)
         )
         val googleSignInBtn = findViewById<SignInButton>(R.id.btn_login_googleSignInBtn)
 
@@ -67,20 +67,20 @@ class LoginActivity : AppCompatActivity() {
             if (child is TextView) {
                 child.text = "Sign In with Google"
                 child.textSize = 16F
-                val dp15 = UnitConverter.dpToPx(this, 15);
-                val dp30 = UnitConverter.dpToPx(this, 35);
-                child.setPadding(dp30, dp15, dp30, dp15);
+                val dp15 = UnitConverter.dpToPx(this, 15)
+                val dp30 = UnitConverter.dpToPx(this, 35)
+                child.setPadding(dp30, dp15, dp30, dp15)
                 break
             }
         }
 
         findViewById<Button>(R.id.btn_login_sendOTP)
             .setOnClickListener {
-                onSendOtpClick();
+                onSendOtpClick()
             }
         findViewById<Button>(R.id.btn_login_submitOTP)
             .setOnClickListener {
-                onSubmitOtpClick();
+                onSubmitOtpClick()
             }
 
         viewModel = ViewModelProvider(
@@ -114,11 +114,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun onSubmitOtpClick() {
-        val otp = findViewById<EditText>(R.id.et_login_otp).text.toString();
+        val otp = findViewById<EditText>(R.id.et_login_otp).text.toString()
         if (otp.isEmpty())
             Toasty.error(baseContext, "OTP is empty").show()
 
-        val loginCredentials = PhoneAuthProvider.getCredential(storedVerificationId!!, otp);
+        val loginCredentials = PhoneAuthProvider.getCredential(storedVerificationId!!, otp)
         progressTitle?.text = "Signing In"
         progressMessage?.text = "Verifying the OTP"
         alertDialog?.show()
@@ -171,9 +171,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUserRegistrationObserver() {
-        viewModel.getRegisterUserLiveData().observe(this, Observer { isRegistered ->
+        viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
             if (isRegistered) {
-                viewModel.updateFcmToken();
+                viewModel.updateFcmToken()
                 startActivity(Intent(baseContext, HomeActivity::class.java))
                 alertDialog?.cancel()
                 finish()

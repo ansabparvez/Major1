@@ -1,5 +1,6 @@
 package com.devansab.begnn.views.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,11 +16,12 @@ import com.devansab.begnn.viewmodels.UserRegistrationViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import es.dmoral.toasty.Toasty
 
+@SuppressLint("SetTextI18n")
 class UserRegistrationActivity : AppCompatActivity() {
 
-    private lateinit var etName: EditText;
-    private lateinit var etUsername: EditText;
-    private lateinit var viewModel: UserRegistrationViewModel;
+    private lateinit var etName: EditText
+    private lateinit var etUsername: EditText
+    private lateinit var viewModel: UserRegistrationViewModel
     private lateinit var alertDialog: AlertDialog
     private lateinit var progressTitle: TextView
     private lateinit var progressMessage: TextView
@@ -35,12 +37,12 @@ class UserRegistrationActivity : AppCompatActivity() {
         etName = findViewById(R.id.et_userRegistration_name)
         etUsername = findViewById(R.id.et_userRegistration_userName)
         findViewById<Button>(R.id.btn_userRegistration_createAccount)
-            .setOnClickListener({ button -> registerUser() })
+            .setOnClickListener { registerUser() }
 
         viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
-        ).get(UserRegistrationViewModel::class.java)
+        )[UserRegistrationViewModel::class.java]
 
         setUserNameAvailableObserver()
 
@@ -58,7 +60,7 @@ class UserRegistrationActivity : AppCompatActivity() {
     private fun setUserNameAvailableObserver() {
         viewModel.getUserNameAvailableLiveData().observe(this, { isAvailable ->
             alertDialog.cancel()
-            DebugLog.i("ansab tag", "is available: $isAvailable");
+            DebugLog.i("ansab tag", "is available: $isAvailable")
             if (isAvailable) {
                 progressMessage.text = "Creating your account"
                 alertDialog.show()
@@ -72,14 +74,14 @@ class UserRegistrationActivity : AppCompatActivity() {
         })
     }
 
-    private fun setUserRegistrationObserver(){
+    private fun setUserRegistrationObserver() {
         viewModel.getUserRegistrationLiveData().observe(this, { isRegistered ->
             alertDialog.cancel()
-            if(isRegistered){
+            if (isRegistered) {
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
-            }else{
+            } else {
                 Toasty.error(this, "Some error. Please try again later").show()
             }
         })

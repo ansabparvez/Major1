@@ -8,8 +8,9 @@ import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class AppFirebaseMessagingService : FirebaseMessagingService() {
@@ -27,12 +28,13 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         DebugLog.i(this, "fcm message: " + remoteMessage.data.toString())
         super.onMessageReceived(remoteMessage)
 
-        val data = remoteMessage.data;
+        val data = remoteMessage.data
         if (data.containsKey("messageId")) {
             parseMessage(data)
         }
     }
 
+    @DelicateCoroutinesApi
     private fun parseMessage(messageData: Map<String, String>) {
         if (FirebaseAuth.getInstance().currentUser == null)
             return
@@ -43,9 +45,9 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         val isAnonymous = messageData["isAnonymous"].equals("true")
 
         val messageRepository = MessageRepository(application)
-        val message = Message(messageId, text, time, userName, false, isAnonymous);
-        GlobalScope.launch {
-            messageRepository.insertMessage(message);
+        val message = Message(messageId, text, time, userName, false, isAnonymous)
+        GlobalScope.launch(Dispatchers.IO) {
+            messageRepository.insertMessage(message)
         }
     }
 }

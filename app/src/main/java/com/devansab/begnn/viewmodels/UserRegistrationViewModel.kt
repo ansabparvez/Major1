@@ -12,15 +12,15 @@ class UserRegistrationViewModel(application: Application) : AndroidViewModel(app
 
     private var userRepository = UserRepository(application)
 
-    public fun isUserNameAvailable(userName: String) {
+    fun isUserNameAvailable(userName: String) {
         userRepository.checkUserNameAvailable(userName)
     }
 
-    public fun getUserNameAvailableLiveData(): LiveData<Boolean> {
+    fun getUserNameAvailableLiveData(): LiveData<Boolean> {
         return userRepository.getIsUserNameAvailableLiveData()
     }
 
-    public fun completeRegistration(name: String, userName: String) {
+    fun completeRegistration(name: String, userName: String) {
         val userDataMap = HashMap<String, String>()
         userDataMap["name"] = name
         userDataMap["userName"] = userName
@@ -29,7 +29,7 @@ class UserRegistrationViewModel(application: Application) : AndroidViewModel(app
     }
 
     private fun setFCMTokenAndRegister(userDataMap: HashMap<String, String>) {
-        val token = SharedPrefManager.getInstance(getApplication()).getFCMToken();
+        val token = SharedPrefManager.getInstance(getApplication()).getFCMToken()
         if (token != null) {
             userDataMap["fcmToken"] = token
             userRepository.registerUser(userDataMap)
@@ -37,16 +37,16 @@ class UserRegistrationViewModel(application: Application) : AndroidViewModel(app
         }
 
         FirebaseMessaging.getInstance().token
-            .addOnCompleteListener(OnCompleteListener { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val newToken = task.result;
+                    val newToken = task.result
                     userDataMap["fcmToken"] = newToken
                     userRepository.registerUser(userDataMap)
                 }
-            })
+            }
     }
 
-    public fun getUserRegistrationLiveData(): LiveData<Boolean>{
+    fun getUserRegistrationLiveData(): LiveData<Boolean> {
         return userRepository.getUserRegistrationLiveData()
     }
 

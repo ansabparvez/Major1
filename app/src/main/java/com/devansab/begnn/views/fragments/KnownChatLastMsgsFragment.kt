@@ -11,14 +11,12 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.adapters.SentMessagesRVAdapter
-import com.devansab.begnn.data.AppDatabase
 import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.viewmodels.KnownChatLastMsgsViewModel
@@ -29,12 +27,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
-    private lateinit var rootView: View;
+    private lateinit var rootView: View
     private lateinit var viewModel: KnownChatLastMsgsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +37,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_known_chat_last_msgs, container, false)
 
-        initViews();
+        initViews()
         return rootView
     }
 
@@ -58,8 +52,6 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
                 .getInstance(MainApplication.instance)
         )[KnownChatLastMsgsViewModel::class.java]
 
-        val appDatabase = AppDatabase.getInstance(requireContext())
-
         viewModel.viewModelScope.launch {
             viewModel.getAllUnAnonymousLastMessages().collect {
                 displayLastMessages(ArrayList(it))
@@ -73,8 +65,8 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
             .setView(findUserLayout)
             .create()
 
-        val etSearchUserName = findUserLayout?.findViewById<EditText>(R.id.et_searchUser_userName);
-        val btnSearchUser = findUserLayout?.findViewById<Button>(R.id.btn_searchUser_search);
+        val etSearchUserName = findUserLayout?.findViewById<EditText>(R.id.et_searchUser_userName)
+        val btnSearchUser = findUserLayout?.findViewById<Button>(R.id.btn_searchUser_search)
 
         setFindUserObserver()
         btnSearchUser?.setOnClickListener {
@@ -85,14 +77,14 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
     }
 
     private fun setFindUserObserver() {
-        viewModel.getFindUserLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getFindUserLiveData().observe(viewLifecycleOwner, {
             if (it.success) {
                 val intent = Intent(requireActivity(), KnownUserChatActivity::class.java)
                 intent.putExtra("userName", it.user?.userName)
-                intent.putExtra("name", it.user?.name);
+                intent.putExtra("name", it.user?.name)
                 startActivity(intent)
                 viewModel.viewModelScope.launch {
-                    viewModel.insertUser(it.user!!);
+                    viewModel.insertUser(it.user!!)
                 }
                 //Toasty.success(requireContext(), it.user?.userName.toString()).show()
             } else {
@@ -111,7 +103,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         }
         rootView.findViewById<ConstraintLayout>(R.id.constraintLayout_sentMsg_noMessage)
             .visibility = View.GONE
-        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview);
+        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
         val sentMessagesAdapter = SentMessagesRVAdapter(messagesList, this)
         rvLastMessages.adapter = sentMessagesAdapter

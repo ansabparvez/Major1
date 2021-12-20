@@ -9,6 +9,4 @@ data class User(
     val userName: String,
     val name: String,
     val isAnonymous: Boolean
-) {
-
-}
+)

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 
 class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMessageClickListener {
-    private lateinit var rootView: View;
+    private lateinit var rootView: View
     private lateinit var viewModel: UnknownChatLastMsgsViewModel
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_unknown_chat_last_msgs, container, false)
 
-        initViews();
+        initViews()
         return rootView
     }
 
@@ -54,7 +54,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
     }
 
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
-        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_reMsg_chatPreview);
+        val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_reMsg_chatPreview)
         rvLastMessages.layoutManager = LinearLayoutManager(requireContext())
         val sentMessagesAdapter = ReceivedMessagesRVAdapter(messagesList, this)
         rvLastMessages.adapter = sentMessagesAdapter

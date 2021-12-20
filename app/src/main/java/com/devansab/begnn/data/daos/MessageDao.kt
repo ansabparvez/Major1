@@ -7,7 +7,7 @@ import com.devansab.begnn.data.entities.Message
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract interface MessageDao {
+interface MessageDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertMessage(message: Message)

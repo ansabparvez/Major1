@@ -10,6 +10,7 @@ import com.devansab.begnn.views.fragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 
+@Suppress("NAME_SHADOWING")
 class HomeActivity : AppCompatActivity() {
 
 
@@ -20,34 +21,42 @@ class HomeActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav_home_nav);
-        bottomNav.itemIconTintList = null;
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav_home_nav)
+        bottomNav.itemIconTintList = null
 
 
-            val frag = KnownChatLastMsgsFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.frameLayout_home_frame,
-                frag).commit()
+        val frag = KnownChatLastMsgsFragment()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.frameLayout_home_frame,
+            frag
+        ).commit()
 
         bottomNav.setOnItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.menu_home_sent -> {
                     val frag = KnownChatLastMsgsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout_home_frame,
-                    frag).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout_home_frame,
+                        frag
+                    ).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_home_received -> {
                     val frag = UnknownChatLastMsgsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout_home_frame,
-                    frag).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout_home_frame,
+                        frag
+                    ).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_home_settings -> {
                     val frag = SettingsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout_home_frame,
-                    frag).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout_home_frame,
+                        frag
+                    ).commit()
                     return@setOnItemSelectedListener true
                 }
             }

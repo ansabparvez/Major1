@@ -8,15 +8,8 @@ import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.viewmodels.MainViewModel
 import com.devansab.begnn.R
-import com.devansab.begnn.data.entities.Message
-import com.devansab.begnn.data.entities.User
-import com.devansab.begnn.data.repositories.MessageRepository
-import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,52 +24,52 @@ class MainActivity : AppCompatActivity() {
         /*val message = Message(
             UUID.randomUUID().toString(), "this is message 1",
             System.currentTimeMillis(), "test", false, false
-        );
+        )
 
         val message2 = Message(
             UUID.randomUUID().toString(), "this is message 2",
             System.currentTimeMillis(), "test", false, false
-        );
+        )
 
         val message3 = Message(
             UUID.randomUUID().toString(), "this is message 3",
             System.currentTimeMillis(), "test", true, false
-        );
+        )
 
         val message4 = Message(
             UUID.randomUUID().toString(), "this is message 4",
             System.currentTimeMillis(), "test", true, false
-        );
+        )
 
         val message5 = Message(
             UUID.randomUUID().toString(), "this is message 5",
             System.currentTimeMillis(), "test", false, false
-        );
+        )
 
         val message6 = Message(
             UUID.randomUUID().toString(), "this is message 6",
             System.currentTimeMillis(), "test", true, false
-        );
+        )
 
         val message7 = Message(
             UUID.randomUUID().toString(), "this is message 7",
             System.currentTimeMillis(), "test", true, false
-        );
+        )
 
         val message8 = Message(
             UUID.randomUUID().toString(), "this is message 8",
             System.currentTimeMillis(), "test", false, false
-        );
+        )
 
         val message9 = Message(
             UUID.randomUUID().toString(), "this is message 9",
             System.currentTimeMillis(), "test", false, false
-        );
+        )
 
         val message10 = Message(
             UUID.randomUUID().toString(), "this is message 10",
             System.currentTimeMillis(), "test", true, false
-        );
+        )
 
         GlobalScope.launch {
             MessageRepository(application).insertMessage(message)
@@ -105,28 +98,28 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
-        )[MainViewModel::class.java];
+        )[MainViewModel::class.java]
 
         //FirebaseAuth.getInstance().signOut()
-        val user = FirebaseAuth.getInstance().currentUser;
+        val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            DebugLog.i(this, "user is null");
-            val intent = Intent(this, LoginActivity::class.java);
-            startActivity(intent);
-            finish();
-            return;
+            DebugLog.i(this, "user is null")
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
         }
-        DebugLog.i(this, "user is not null");
+        DebugLog.i(this, "user is not null")
 
         viewModel.isUserRegistered()
 
         viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
             if (isRegistered) {
-                DebugLog.i(this, "user is registered");
+                DebugLog.i(this, "user is registered")
                 val intent = Intent(this, HomeActivity::class.java)
                 startFinalActivity(intent)
             } else {
-                DebugLog.i(this, "user is not registered");
+                DebugLog.i(this, "user is not registered")
                 val intent = Intent(this, UserRegistrationActivity::class.java)
                 startFinalActivity(intent)
             }

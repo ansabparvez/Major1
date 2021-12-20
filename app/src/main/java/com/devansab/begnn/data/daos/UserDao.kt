@@ -8,12 +8,12 @@ import com.devansab.begnn.data.entities.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract interface UserDao{
+interface UserDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertUser(user: User)
 
     @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getUserByUsername(userName: String) : Flow<User>
+    fun getUserByUsername(userName: String): Flow<User>
 
 }

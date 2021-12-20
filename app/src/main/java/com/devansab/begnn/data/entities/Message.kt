@@ -13,5 +13,4 @@ data class Message(
     val userName: String,
     val sentByMe: Boolean,
     val isAnonymous: Boolean
-) {
-}
+)

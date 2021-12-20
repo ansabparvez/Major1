@@ -9,11 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.devansab.begnn.R
 
 class SettingsFragment : Fragment() {
-    private var rootView: View? = null;
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var rootView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,12 +17,12 @@ class SettingsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_settings, container, false)
-        initViews();
+        initViews()
         return rootView
     }
 
     private fun initViews() {
-        val toolbar : Toolbar? = rootView?.findViewById(R.id.toolbar_settings_toolbar)
+        val toolbar: Toolbar? = rootView?.findViewById(R.id.toolbar_settings_toolbar)
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.title = "Settings"
     }

@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.devansab.begnn.data.AppDatabase
@@ -21,20 +20,20 @@ import java.util.HashMap
 
 class UserRepository(val application: Application) {
 
-    private val isUserRegisteredLiveData = MutableLiveData<Boolean>();
-    private val isUserNameAvailableLiveData = MutableLiveData<Boolean>();
-    private val userRegistrationLiveData = MutableLiveData<Boolean>();
-    private val findUserLiveData = MutableLiveData<FindUserModel>();
+    private val isUserRegisteredLiveData = MutableLiveData<Boolean>()
+    private val isUserNameAvailableLiveData = MutableLiveData<Boolean>()
+    private val userRegistrationLiveData = MutableLiveData<Boolean>()
+    private val findUserLiveData = MutableLiveData<FindUserModel>()
     private val appDatabase = AppDatabase.getInstance(application)
     private var userDao: UserDao = appDatabase.userDao()
 
-    public fun isUserRegistered() {
-        val user = FirebaseAuth.getInstance().currentUser ?: return;
+    fun isUserRegistered() {
+        val user = FirebaseAuth.getInstance().currentUser ?: return
         DebugLog.i(this, "getting token")
         user.getIdToken(true).addOnSuccessListener {
-            DebugLog.i("ansab", "auth token: " + it.token);
+            DebugLog.i("ansab", "auth token: " + it.token)
             checkRegisteredUser(it.token.toString())
-            SharedPrefManager.getInstance(application).setAuthToken(it.token.toString());
+            SharedPrefManager.getInstance(application).setAuthToken(it.token.toString())
         }
     }
 
@@ -43,7 +42,8 @@ class UserRepository(val application: Application) {
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/isRegistrationFinished"
         val jsonObjectRequest: JsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.GET, url, null,
+            object : JsonObjectRequest(
+                Method.GET, url, null,
                 Response.Listener { response ->
                     if (response.getBoolean("success")) {
                         isUserRegisteredLiveData.value =
@@ -68,27 +68,28 @@ class UserRepository(val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    public fun getRegisterUserLiveData(): LiveData<Boolean> {
+    fun getRegisterUserLiveData(): LiveData<Boolean> {
         return isUserRegisteredLiveData
     }
 
-    public fun getIsUserNameAvailableLiveData(): LiveData<Boolean> {
+    fun getIsUserNameAvailableLiveData(): LiveData<Boolean> {
         return isUserNameAvailableLiveData
     }
 
-    public fun getUserRegistrationLiveData(): LiveData<Boolean> {
+    fun getUserRegistrationLiveData(): LiveData<Boolean> {
         return userRegistrationLiveData
     }
 
-    public fun getFindUserLiveData(): LiveData<FindUserModel> {
+    fun getFindUserLiveData(): LiveData<FindUserModel> {
         return findUserLiveData
     }
 
-    public fun checkUserNameAvailable(userName: String) {
+    fun checkUserNameAvailable(userName: String) {
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/isUserNameAvailable?userName=$userName"
         val jsonObjectRequest: JsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.GET, url, null,
+            object : JsonObjectRequest(
+                Method.GET, url, null,
                 Response.Listener { response ->
                     DebugLog.i("ansab", "response: ($response.toString())")
                     if (response.getBoolean("success")) {
@@ -103,20 +104,21 @@ class UserRepository(val application: Application) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
-                    val token = SharedPrefManager.getInstance(application).getAuthToken();
+                    val token = SharedPrefManager.getInstance(application).getAuthToken()
                     params["Authorization"] = "Bearer $token"
                     params["Content-Type"] = "application/json"
                     return params
                 }
-            };
+            }
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    public fun registerUser(userData: HashMap<String, String>) {
+    fun registerUser(userData: HashMap<String, String>) {
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/completeRegistration"
         val jsonObjectRequest: JsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.POST, url, null,
+            object : JsonObjectRequest(
+                Method.POST, url, null,
                 Response.Listener { response ->
                     DebugLog.i("ansab", response.toString())
                     userRegistrationLiveData.value = response.getBoolean("success")
@@ -137,20 +139,21 @@ class UserRepository(val application: Application) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
-                    val token = SharedPrefManager.getInstance(application).getAuthToken();
+                    val token = SharedPrefManager.getInstance(application).getAuthToken()
                     params["Authorization"] = "Bearer $token"
                     params["Content-Type"] = "application/json"
                     return params
                 }
-            };
-        MainApplication.instance.addToRequestQueue(jsonObjectRequest);
+            }
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    public fun findUser(userName: String) {
+    fun findUser(userName: String) {
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/findUser?userName=$userName"
         val jsonObjectRequest: JsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.GET, url, null,
+            object : JsonObjectRequest(
+                Method.GET, url, null,
                 Response.Listener { response ->
                     DebugLog.i("ansab", "response: ($response.toString())")
                     if (response.getBoolean("success")) {
@@ -171,12 +174,12 @@ class UserRepository(val application: Application) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
-                    val token = SharedPrefManager.getInstance(application).getAuthToken();
+                    val token = SharedPrefManager.getInstance(application).getAuthToken()
                     params["Authorization"] = "Bearer $token"
                     params["Content-Type"] = "application/json"
                     return params
                 }
-            };
+            }
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
@@ -193,28 +196,29 @@ class UserRepository(val application: Application) {
     )
 
     private fun saveUserDataToSharedPref(userData: JSONObject) {
-        val userDataMap = HashMap<String, String>();
+        val userDataMap = HashMap<String, String>()
         userDataMap[Const.KEY_USER_NAME] = userData.getString("name")
         userDataMap[Const.KEY_USER_UNAME] = userData.getString("userName")
         userDataMap[Const.KEY_USER_ANON_ID] = userData.getString("anonymousId")
 
-        SharedPrefManager.getInstance(application).setUserData(userDataMap);
-        DebugLog.i("ansab", userDataMap.toString());
+        SharedPrefManager.getInstance(application).setUserData(userDataMap)
+        DebugLog.i("ansab", userDataMap.toString())
     }
 
-    public fun fetchAndUpdateFcmToken(){
+    fun fetchAndUpdateFcmToken() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            updateFcmToken(it!!)
+            updateFcmToken(it)
         }
     }
 
-    public fun updateFcmToken(token: String){
+    fun updateFcmToken(token: String) {
         val userData = HashMap<String, String>()
-        userData["fcmToken"] = token;
+        userData["fcmToken"] = token
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/updateFcmToken"
         val jsonObjectRequest: JsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.POST, url, null,
+            object : JsonObjectRequest(
+                Method.POST, url, null,
                 Response.Listener { response ->
                     DebugLog.i("ansab", response.toString())
                 },
@@ -231,13 +235,13 @@ class UserRepository(val application: Application) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
-                    val authToken = SharedPrefManager.getInstance(application).getAuthToken();
+                    val authToken = SharedPrefManager.getInstance(application).getAuthToken()
                     params["Authorization"] = "Bearer $authToken"
                     params["Content-Type"] = "application/json"
                     return params
                 }
-            };
-        MainApplication.instance.addToRequestQueue(jsonObjectRequest);
+            }
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
 }

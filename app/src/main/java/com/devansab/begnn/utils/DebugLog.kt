@@ -5,24 +5,24 @@ import com.devansab.begnn.BuildConfig
 
 class DebugLog {
     companion object {
-        public fun i(tag: Any, message: String) {
+        fun i(tag: Any, message: String) {
             if (!BuildConfig.DEBUG)
                 return
 
-            var finalTag = tag::class.java.simpleName;
+            var finalTag = tag::class.java.simpleName
             if (tag is String)
                 finalTag = tag
-            Log.i(finalTag, message);
+            Log.i(finalTag, message)
         }
 
-        public fun e(tag: Any, message: String) {
+        fun e(tag: Any, message: String) {
             if (!BuildConfig.DEBUG)
                 return
 
-            var finalTag = tag::class.java.simpleName;
+            var finalTag = tag::class.java.simpleName
             if (tag is String)
                 finalTag = tag
-            Log.e(finalTag, message);
+            Log.e(finalTag, message)
         }
     }
 }

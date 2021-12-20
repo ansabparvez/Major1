@@ -9,15 +9,15 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private var userRepository = UserRepository(application)
 
-    public fun isUserRegistered() {
-        userRepository.isUserRegistered();
+    fun isUserRegistered() {
+        userRepository.isUserRegistered()
     }
 
-    public fun getRegisterUserLiveData(): LiveData<Boolean> {
+    fun getRegisterUserLiveData(): LiveData<Boolean> {
         return userRepository.getRegisterUserLiveData()
     }
 
-    public fun updateFcmToken(){
+    fun updateFcmToken() {
         userRepository.fetchAndUpdateFcmToken()
     }
 

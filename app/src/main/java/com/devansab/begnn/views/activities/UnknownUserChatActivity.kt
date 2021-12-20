@@ -21,10 +21,10 @@ import kotlin.collections.ArrayList
 class UnknownUserChatActivity : AppCompatActivity() {
 
     private lateinit var rvChat: RecyclerView
-    private lateinit var viewmodel: UnknownUserChatViewModel
+    private lateinit var viewModel: UnknownUserChatViewModel
     private lateinit var userName: String
     private var populated = false
-    private lateinit var adapter: ChatRVAdapter;
+    private lateinit var adapter: ChatRVAdapter
     private val chatList = ArrayList<Message>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class UnknownUserChatActivity : AppCompatActivity() {
 
     private fun initViews() {
         rvChat = findViewById(R.id.rv_unknownChat_chats)
-        viewmodel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(application)
         )[UnknownUserChatViewModel::class.java]
@@ -50,8 +50,8 @@ class UnknownUserChatActivity : AppCompatActivity() {
         adapter = ChatRVAdapter(chatList)
         rvChat.adapter = adapter
 
-        viewmodel.viewModelScope.launch {
-            viewmodel.getAllMessagesOfUser(userName).collect {
+        viewModel.viewModelScope.launch {
+            viewModel.getAllMessagesOfUser(userName).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(it)
             }
@@ -85,8 +85,8 @@ class UnknownUserChatActivity : AppCompatActivity() {
         )
 
         etMessage.setText("")
-        viewmodel.viewModelScope.launch {
-            viewmodel.sendMessage(message)
+        viewModel.viewModelScope.launch {
+            viewModel.sendMessage(message)
         }
     }
 }

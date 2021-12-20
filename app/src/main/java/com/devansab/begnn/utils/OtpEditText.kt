@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.appcompat.widget.AppCompatEditText
 import com.devansab.begnn.R
-import android.text.Editable
 import android.util.AttributeSet
 import android.view.ActionMode
 import java.lang.RuntimeException
@@ -19,9 +18,9 @@ class OtpEditText : AppCompatEditText {
     private var mLinesPaint: Paint? = null
     private var mClickListener: OnClickListener? = null
 
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context?) : super(context!!)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -29,10 +28,10 @@ class OtpEditText : AppCompatEditText {
         attrs,
         defStyleAttr
     ) {
-        init(context, attrs)
+        init(context)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init(context: Context) {
         val multi = context.resources.displayMetrics.density
         mLineStroke *= multi
         mLinesPaint = Paint(paint)
