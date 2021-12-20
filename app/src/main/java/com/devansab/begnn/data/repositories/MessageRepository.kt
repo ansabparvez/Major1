@@ -6,7 +6,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.devansab.begnn.data.AppDatabase
-import com.devansab.begnn.data.LastMessage
+import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.data.entities.Message
 import com.devansab.begnn.utils.Const
 import com.devansab.begnn.utils.DebugLog

@@ -3,9 +3,8 @@ package com.devansab.begnn.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.devansab.begnn.data.LastMessage
+import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.data.entities.User
-import com.devansab.begnn.data.repositories.LastMessageRepository
 import com.devansab.begnn.data.repositories.MessageRepository
 import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
@@ -15,7 +14,6 @@ class KnownChatLastMsgsViewModel(application: Application) : AndroidViewModel(ap
 
     private val userRepository = UserRepository(application)
     private val messageRepository = MessageRepository(application)
-    private val lastMessageRepository = LastMessageRepository(application)
 
     fun findUser(userName: String) {
         DebugLog.i(this, "user to search: $userName")

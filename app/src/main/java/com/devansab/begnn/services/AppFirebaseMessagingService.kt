@@ -1,8 +1,6 @@
 package com.devansab.begnn.services
 
-import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.data.entities.Message
-import com.devansab.begnn.data.repositories.LastMessageRepository
 import com.devansab.begnn.data.repositories.MessageRepository
 import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
@@ -45,22 +43,9 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         val isAnonymous = messageData["isAnonymous"].equals("true")
 
         val messageRepository = MessageRepository(application)
-        val lastMessageRepository = LastMessageRepository(application)
-        val userRepository = UserRepository(application)
         val message = Message(messageId, text, time, userName, false, isAnonymous);
         GlobalScope.launch {
             messageRepository.insertMessage(message);
-            if (!isAnonymous) {
-                userRepository.getUserByUsername(userName)
-                    .collect {
-                        val lastMessage = LastMessage(userName, text, time, it.name, false)
-                        lastMessageRepository.updateLastMessage(lastMessage)
-                    }
-            } else {
-                val lastMessage = LastMessage(userName, text, time, "Anonymous", true)
-                lastMessageRepository.updateLastMessage(lastMessage)
-            }
-
         }
     }
 }

@@ -2,7 +2,7 @@ package com.devansab.begnn.data.daos
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import com.devansab.begnn.data.LastMessage
+import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.data.entities.Message
 import kotlinx.coroutines.flow.Flow
 

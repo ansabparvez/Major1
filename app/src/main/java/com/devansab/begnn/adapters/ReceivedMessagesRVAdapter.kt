@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
-import com.devansab.begnn.data.LastMessage
+import com.devansab.begnn.data.entities.LastMessage
 
 class ReceivedMessagesRVAdapter(
     private val lastMessagesList: List<LastMessage>,
@@ -22,7 +22,7 @@ class ReceivedMessagesRVAdapter(
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
         val lastMessage = lastMessagesList[position];
-        holder.tvName.text = lastMessage.name
+        holder.tvName.text = "Anonymous"
         holder.tvDate.text = lastMessage.message.time.toString()
         holder.tvMessage.text = lastMessage.message.text
     }

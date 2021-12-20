@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.adapters.ReceivedMessagesRVAdapter
-import com.devansab.begnn.data.AppDatabase
-import com.devansab.begnn.data.LastMessage
+import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.viewmodels.UnknownChatLastMsgsViewModel
 import com.devansab.begnn.views.activities.UnknownUserChatActivity
@@ -46,9 +45,6 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(MainApplication.instance)
         )[UnknownChatLastMsgsViewModel::class.java]
-
-        val appDatabase = AppDatabase.getInstance(requireContext())
-        val lastMessageDao = appDatabase.lastMessageDao()
 
         viewModel.viewModelScope.launch {
             viewModel.getAllAnonymousLastMessages().collect {
