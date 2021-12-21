@@ -48,7 +48,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
     private fun initViews() {
         val toolbar: Toolbar? = rootView.findViewById(R.id.toolbar_reMsg_toolbar)
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar?.title = "Received Messages"
+        toolbar?.title = "Anonymous Messages"
 
         viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
