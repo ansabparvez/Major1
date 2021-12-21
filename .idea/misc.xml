@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/layout/fragment_received_messages.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_sent_messages.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2299342105263158" />
+        <entry key="app/src/main/res/layout/fragment_unknown_chat_last_msgs.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_list_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_message_received.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_message_sent.xml" value="0.2299342105263158" />
