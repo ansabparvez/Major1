@@ -29,6 +29,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_java.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_unknown_user_chat.xml" value="0.2299342105263158" />
+        <entry key="app/src/main/res/layout/activity_user_external_action.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_user_registration.xml" value="0.22039473684210525" />
         <entry key="app/src/main/res/layout/fragment_known_chat_last_msgs.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_received_messages.xml" value="0.2299342105263158" />

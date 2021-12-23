@@ -14,6 +14,7 @@ class MainApplication : Application() {
         instance = this
         requestQueue = Volley.newRequestQueue(applicationContext)
         addAuthTokenChangeListener()
+        createNotificationChannels()
     }
 
     companion object {
@@ -24,6 +25,14 @@ class MainApplication : Application() {
 
     fun addToRequestQueue(request: JsonObjectRequest) {
         requestQueue.add(request)
+    }
+
+    private fun createNotificationChannels() {
+        MyNotificationManager.createNotificationChannel(
+            MyNotificationManager.MESSAGE_NOTIFICATION_CHANNEL,
+            MyNotificationManager.MESSAGE_NOTIFICATION_CHANNEL_DESC,
+            MyNotificationManager.MESSAGE_NOTIFICATION_IMPORTANCE
+        )
     }
 
     private fun addAuthTokenChangeListener() {

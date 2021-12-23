@@ -4,6 +4,7 @@ import com.devansab.begnn.data.entities.Message
 import com.devansab.begnn.data.repositories.MessageRepository
 import com.devansab.begnn.data.repositories.UserRepository
 import com.devansab.begnn.utils.DebugLog
+import com.devansab.begnn.utils.MyNotificationManager
 import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -49,5 +50,7 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         GlobalScope.launch(Dispatchers.IO) {
             messageRepository.insertMessage(message)
         }
+
+        MyNotificationManager.showMessageNotification(message)
     }
 }
