@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.devansab.begnn.R
 import com.devansab.begnn.adapters.SentMessagesRVAdapter
 import com.devansab.begnn.data.entities.LastMessage
@@ -31,6 +32,7 @@ import kotlinx.coroutines.launch
 class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View
     private lateinit var viewModel: KnownChatLastMsgsViewModel
+    private lateinit var alertDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,21 +63,27 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         }
     }
 
-    private fun showFindUserPopUp() {
+    private fun buildUserSearchAlertDialog() {
         val findUserLayout = activity?.layoutInflater?.inflate(R.layout.layout_search_user, null)
-        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog = AlertDialog.Builder(requireContext())
             .setView(findUserLayout)
             .create()
+    }
 
-        val etSearchUserName = findUserLayout?.findViewById<EditText>(R.id.et_searchUser_userName)
-        val btnSearchUser = findUserLayout?.findViewById<Button>(R.id.btn_searchUser_search)
+    private fun showFindUserPopUp() {
+        buildUserSearchAlertDialog()
+
+        alertDialog.show()
+        val etSearchUserName = alertDialog?.findViewById<EditText>(R.id.et_searchUser_userName)
+        val btnSearchUser = alertDialog?.findViewById<Button>(R.id.btn_searchUser_search)
 
         setFindUserObserver()
         btnSearchUser?.setOnClickListener {
             viewModel.findUser(etSearchUserName?.text.toString())
+            alertDialog.cancel()
+            rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
+                .visibility = VISIBLE
         }
-
-        alertDialog.show()
     }
 
     private fun setFindUserObserver() {
@@ -88,10 +96,12 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
                 viewModel.viewModelScope.launch {
                     viewModel.insertUser(it.user!!)
                 }
-                //Toasty.success(requireContext(), it.user?.userName.toString()).show()
             } else {
                 Toasty.error(requireContext(), it.error.toString()).show()
             }
+            viewModel.resetFindUserLiveData()
+            rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
+                .visibility = GONE
         })
     }
 

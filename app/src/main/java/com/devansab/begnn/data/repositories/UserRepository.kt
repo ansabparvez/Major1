@@ -26,7 +26,7 @@ class UserRepository(val application: Application) {
     private val isUserRegisteredLiveData = MutableLiveData<Boolean>()
     private val isUserNameAvailableLiveData = MutableLiveData<Boolean>()
     private val userRegistrationLiveData = MutableLiveData<Boolean>()
-    private val findUserLiveData = MutableLiveData<FindUserModel>()
+    private var findUserLiveData = MutableLiveData<FindUserModel>()
     private val appDatabase = AppDatabase.getInstance(application)
     private var userDao: UserDao = appDatabase.userDao()
 
@@ -85,6 +85,10 @@ class UserRepository(val application: Application) {
 
     fun getFindUserLiveData(): LiveData<FindUserModel> {
         return findUserLiveData
+    }
+
+    fun resetFindUserLiveData() {
+        findUserLiveData = MutableLiveData<FindUserModel>()
     }
 
     fun checkUserNameAvailable(userName: String) {

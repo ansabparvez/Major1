@@ -24,6 +24,10 @@ class KnownChatLastMsgsViewModel(application: Application) : AndroidViewModel(ap
         return userRepository.getFindUserLiveData()
     }
 
+    fun resetFindUserLiveData(){
+        userRepository.resetFindUserLiveData()
+    }
+
     fun getAllUnAnonymousLastMessages():
     //Not anonymous, so provide 0 for room query
             Flow<List<LastMessage>> = messageRepository.getAllLastMessages(0)
