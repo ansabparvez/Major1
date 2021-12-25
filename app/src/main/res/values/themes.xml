@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Begnn" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Begnn" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryVariant">@color/color_primary</item>
@@ -16,11 +16,10 @@
         <item name="android:windowBackground">@color/color_background</item>
     </style>
 
-    <style name="Theme.ToolBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.ToolBarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="background">@color/color_primary</item>
         <item name="android:textColor">@color/color_toolbar_text</item>
         <item name="android:textSize">50sp</item>
     </style>
-
 
 </resources>
