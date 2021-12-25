@@ -16,7 +16,7 @@ interface MessageDao {
     fun getAllMessagesOfUser(userName: String, isAnonymous: Int): Flow<List<Message>>
 
     @Query(
-        "SELECT messages.*, name  FROM messages JOIN users ON messages.userName = users.userName WHERE messages.isAnonymous = :isAnonymous GROUP BY messages.userName ORDER BY time "
+        "SELECT messages.*, name FROM users  JOIN (SELECT messages.* FROM messages WHERE isAnonymous = :isAnonymous ORDER BY time DESC) AS messages ON users.userName = messages.userName GROUP BY messages.userName"
     )
     fun getAllLastMessages(isAnonymous: Int): Flow<List<LastMessage>>
 }

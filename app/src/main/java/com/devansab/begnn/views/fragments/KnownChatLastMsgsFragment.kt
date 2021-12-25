@@ -96,6 +96,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
     }
 
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
+        messagesList.sortByDescending { it.message.time }
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
         if (messagesList.size == 0) {
             rootView.findViewById<ConstraintLayout>(R.id.constraintLayout_sentMsg_noMessage)

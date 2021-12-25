@@ -64,6 +64,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
     }
 
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {
+        messagesList.sortByDescending { it.message.time }
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_reMsg_chatPreview)
         if (messagesList.size == 0) {
             showShareUserUI()
