@@ -15,6 +15,9 @@ import com.devansab.begnn.utils.MainApplication
 import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.HashMap
 
@@ -187,7 +190,40 @@ class UserRepository(val application: Application) {
         userDao.insertUser(user)
     }
 
-    fun getUserByUsername(username: String) = userDao.getUserByUsername(username)
+    fun fetchAndStoreAnonymousUserData(anonymousId: String) {
+        val url =
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/getAnonymousUserData?anonymousId=$anonymousId"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(
+                Method.GET, url, null,
+                Response.Listener { response ->
+                    DebugLog.i("ansab", "response: ($response.toString())")
+                    if (response.getBoolean("success")) {
+                        val user = User(
+                            response.getString("anonymousId"),
+                            response.getString("anonymousName"), true
+                        )
+                        GlobalScope.launch(Dispatchers.IO) {
+                            userDao.insertUser(user)
+                        }
+                    }
+                },
+                Response.ErrorListener { }
+            ) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    val token = SharedPrefManager.getInstance(application).getAuthToken()
+                    params["Authorization"] = "Bearer $token"
+                    params["Content-Type"] = "application/json"
+                    return params
+                }
+            }
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest)
+    }
+
+
+    suspend fun getUserByUsername(username: String) = userDao.getUserByUsername(username)
 
     data class FindUserModel(
         val success: Boolean,

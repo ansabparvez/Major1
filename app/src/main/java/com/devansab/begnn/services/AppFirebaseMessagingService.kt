@@ -46,11 +46,22 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         val isAnonymous = messageData["isAnonymous"].equals("true")
 
         val messageRepository = MessageRepository(application)
+        val userRepository = UserRepository(application)
         val message = Message(messageId, text, time, userName, false, isAnonymous)
         GlobalScope.launch(Dispatchers.IO) {
             messageRepository.insertMessage(message)
-        }
+            userRepository.getUserByUsername(message.userName)
+            val user = userRepository.getUserByUsername(userName)
+            if(user==null){
+                DebugLog.i("ansab", "user is null")
+            }
+            if (user==null && isAnonymous) {
+                userRepository.fetchAndStoreAnonymousUserData(userName)
+                MyNotificationManager.showMessageNotification(message, "Anonymous")
+            } else {
+                MyNotificationManager.showMessageNotification(message, user.name)
+            }
 
-        MyNotificationManager.showMessageNotification(message)
+        }
     }
 }

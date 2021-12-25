@@ -9,8 +9,9 @@ class UserExternalActionActivity : AppCompatActivity() {
     companion object {
         const val TYPE = "type"
         const val TYPE_NEW_MESSAGE_NOTIFICATION = "newMessageNotification"
-        const val NEW_MESSAGE_USER_NAME = "newMessageUserName";
-        const val NEW_MESSAGE_PERSON_TYPE = "newMessagePersonType";
+        const val NEW_MESSAGE_USER_NAME = "newMessageUserName"
+        const val NEW_MESSAGE_PERSON_TYPE = "newMessagePersonType"
+        const val NEW_MESSAGE_PERSON_NAME = "newMessagePersonName"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
