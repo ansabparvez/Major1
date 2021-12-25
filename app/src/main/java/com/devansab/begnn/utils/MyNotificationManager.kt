@@ -57,7 +57,7 @@ class MyNotificationManager {
                             .bigText(message.text)
                     )
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(false)
+                    .setAutoCancel(true)
                     .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
 
