@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.R
 import com.devansab.begnn.utils.DebugLog
+import com.devansab.begnn.utils.SharedPrefManager
 import com.devansab.begnn.utils.UnitConverter
 import com.devansab.begnn.viewmodels.LoginViewModel
 import com.google.android.gms.common.SignInButton
@@ -173,6 +174,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setUserRegistrationObserver() {
         viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
             if (isRegistered) {
+                SharedPrefManager.getInstance(this).setUserRegisteredTrue()
                 viewModel.updateFcmToken()
                 startActivity(Intent(baseContext, HomeActivity::class.java))
                 alertDialog?.cancel()

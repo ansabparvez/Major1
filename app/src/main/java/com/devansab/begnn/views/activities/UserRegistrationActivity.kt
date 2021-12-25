@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.R
 import com.devansab.begnn.utils.DebugLog
+import com.devansab.begnn.utils.SharedPrefManager
 import com.devansab.begnn.viewmodels.UserRegistrationViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import es.dmoral.toasty.Toasty
@@ -78,6 +79,7 @@ class UserRegistrationActivity : AppCompatActivity() {
         viewModel.getUserRegistrationLiveData().observe(this, { isRegistered ->
             alertDialog.cancel()
             if (isRegistered) {
+                SharedPrefManager.getInstance(this).setUserRegisteredTrue()
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()

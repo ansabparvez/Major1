@@ -14,6 +14,7 @@ class SharedPrefManager private constructor() {
         private const val KEY_USER_NAME = "sharedPrefUserName"
         private const val KEY_USER_UNAME = "sharedPrefUserUName"
         private const val KEY_USER_ANON_ID = "sharedPrefAnonID"
+        private const val KEY_USER_REGISTERED = "sharedPrefUserRegistered"
 
         fun getInstance(context: Context): SharedPrefManager {
             if (!this::sharedPreferences.isInitialized || !this::instance.isInitialized) {
@@ -28,19 +29,19 @@ class SharedPrefManager private constructor() {
         sharedPreferences.edit().putString(KEY_AUTH_TOKEN, token).apply()
     }
 
-     fun getAuthToken(): String? {
+    fun getAuthToken(): String? {
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null)
     }
 
-     fun setFCMToken(token: String) {
+    fun setFCMToken(token: String) {
         sharedPreferences.edit().putString(KEY_FCM_TOKEN, token).apply()
     }
 
-     fun getFCMToken(): String? {
+    fun getFCMToken(): String? {
         return sharedPreferences.getString(KEY_FCM_TOKEN, null)
     }
 
-     fun setUserData(userData: Map<String, String>) {
+    fun setUserData(userData: Map<String, String>) {
         sharedPreferences.edit()
             .putString(KEY_USER_NAME, userData[Const.KEY_USER_NAME])
             .putString(KEY_USER_UNAME, userData[Const.KEY_USER_UNAME])
@@ -48,12 +49,20 @@ class SharedPrefManager private constructor() {
             .apply()
     }
 
-     fun getUserData(): Map<String, String> {
+    fun getUserData(): Map<String, String> {
         val userData = HashMap<String, String>()
         userData[Const.KEY_USER_NAME] = sharedPreferences.getString(KEY_USER_NAME, "").toString()
         userData[Const.KEY_USER_UNAME] = sharedPreferences.getString(KEY_USER_UNAME, "").toString()
         userData[Const.KEY_USER_ANON_ID] =
             sharedPreferences.getString(KEY_USER_ANON_ID, "").toString()
         return userData
+    }
+
+    fun setUserRegisteredTrue() {
+        sharedPreferences.edit().putBoolean(KEY_USER_REGISTERED, true).apply()
+    }
+
+    fun isUserRegistered(): Boolean {
+        return sharedPreferences.getBoolean(KEY_USER_REGISTERED, false)
     }
 }

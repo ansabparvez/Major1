@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.viewmodels.MainViewModel
 import com.devansab.begnn.R
 import com.devansab.begnn.utils.DebugLog
+import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         Handler(Looper.myLooper()!!).postDelayed({
             initViews()
-        }, 1000)
+        }, 2000)
 
 
         /*val message = Message(
@@ -111,9 +112,19 @@ class MainActivity : AppCompatActivity() {
         }
         DebugLog.i(this, "user is not null")
 
-        viewModel.isUserRegistered()
+        //viewModel.isUserRegistered()
 
-        viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
+        if (SharedPrefManager.getInstance(this).isUserRegistered()) {
+            DebugLog.i(this, "user is registered")
+            val intent = Intent(this, HomeActivity::class.java)
+            startFinalActivity(intent)
+        } else {
+            DebugLog.i(this, "user is not registered")
+            val intent = Intent(this, UserRegistrationActivity::class.java)
+            startFinalActivity(intent)
+        }
+
+        /*viewModel.getRegisterUserLiveData().observe(this, { isRegistered ->
             if (isRegistered) {
                 DebugLog.i(this, "user is registered")
                 val intent = Intent(this, HomeActivity::class.java)
@@ -123,13 +134,13 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, UserRegistrationActivity::class.java)
                 startFinalActivity(intent)
             }
-        })
+        })*/
     }
 
     private fun startFinalActivity(intent: Intent) {
         Handler(Looper.myLooper()!!).postDelayed({
             startActivity(intent)
             finish()
-        }, 2000)
+        }, 0)
     }
 }
