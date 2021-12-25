@@ -57,7 +57,7 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
                 userRepository.fetchAndStoreAnonymousUserData(userName)
                 MyNotificationManager.showMessageNotification(message, "Anonymous")
             } else {
-                MyNotificationManager.showMessageNotification(message, user.name)
+                MyNotificationManager.showMessageNotification(message, user!!.name)
             }
         }
     }
