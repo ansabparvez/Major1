@@ -7,24 +7,49 @@
     android:background="@color/color_background_light"
     tools:context=".views.activities.UserRegistrationActivity">
 
-    <ImageView
-        android:id="@+id/iv_userRegistration_topBackground"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/iv_registration_topBackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/color_primary"
         app:layout_constraintDimensionRatio="5:3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_userRegistration_appName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Major 1"
-        android:textAlignment="center"
-        android:textColor="@color/color_background"
-        android:textSize="36sp"
-        app:layout_constraintTop_toTopOf="@id/iv_userRegistration_topBackground" />
+        <ImageView
+            android:id="@+id/card_registration_appLogo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/app_logo_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_login_appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Begnn"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/card_registration_appLogo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begin your..."
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/tv_login_appName"
+            app:layout_constraintTop_toBottomOf="@id/tv_login_appName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_userRegistration_register"
@@ -35,7 +60,7 @@
         android:visibility="visible"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        app:layout_constraintTop_toBottomOf="@id/iv_userRegistration_topBackground">
+        app:layout_constraintTop_toBottomOf="@id/iv_registration_topBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -80,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:text="This is your display name, and will be shown to public."
+                android:text="This is your display name, and will be shown to people who knows you."
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/ti_userRegistration_name" />
 
@@ -99,8 +124,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_background"
-                    android:hint="Create user name"
                     android:digits="0,1,2,3,4,5,6,7,8,9,_,qwertzuiopasdfghjklyxcvbnm"
+                    android:hint="Create user name"
                     android:paddingStart="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -110,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:text="This will be used to search your account, and is unique for each user."
+                android:text="This will be used to search your account, and it is unique for each user."
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/ti_userRegistration_userName" />
 
