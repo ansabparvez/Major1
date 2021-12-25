@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.data.entities.LastMessage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ReceivedMessagesRVAdapter(
     private val lastMessagesList: List<LastMessage>,
@@ -25,8 +27,13 @@ class ReceivedMessagesRVAdapter(
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
         val lastMessage = lastMessagesList[position]
         holder.tvName.text = lastMessage.name
-        holder.tvDate.text = lastMessage.message.time.toString()
         holder.tvMessage.text = lastMessage.message.text
+
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = lastMessage.message.time
+        val dateFormat = SimpleDateFormat("dd/mm/yyy", Locale.getDefault())
+        holder.tvDate.text = dateFormat.format(calendar.time)
     }
 
     override fun getItemCount(): Int {
