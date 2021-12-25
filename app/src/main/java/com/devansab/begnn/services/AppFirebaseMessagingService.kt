@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@DelicateCoroutinesApi
 class AppFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
@@ -35,7 +36,6 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    @DelicateCoroutinesApi
     private fun parseMessage(messageData: Map<String, String>) {
         if (FirebaseAuth.getInstance().currentUser == null)
             return
@@ -52,16 +52,13 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
             messageRepository.insertMessage(message)
             userRepository.getUserByUsername(message.userName)
             val user = userRepository.getUserByUsername(userName)
-            if(user==null){
-                DebugLog.i("ansab", "user is null")
-            }
-            if (user==null && isAnonymous) {
+
+            if (user == null && isAnonymous) {
                 userRepository.fetchAndStoreAnonymousUserData(userName)
                 MyNotificationManager.showMessageNotification(message, "Anonymous")
             } else {
                 MyNotificationManager.showMessageNotification(message, user.name)
             }
-
         }
     }
 }

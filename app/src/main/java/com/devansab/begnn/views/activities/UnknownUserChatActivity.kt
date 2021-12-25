@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.devansab.begnn.adapters.ChatRVAdapter
 import com.devansab.begnn.data.entities.Message
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.viewmodels.UnknownUserChatViewModel
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -45,6 +47,10 @@ class UnknownUserChatActivity : AppCompatActivity() {
             .setOnClickListener { sendMessage() }
 
         userName = intent.getStringExtra("userName")!!
+        val name = intent.getStringExtra("name")
+        findViewById<TextView>(R.id.tv_unknownChat_userName)
+            .text = name
+
 
         rvChat.layoutManager = LinearLayoutManager(baseContext)
         adapter = ChatRVAdapter(chatList)

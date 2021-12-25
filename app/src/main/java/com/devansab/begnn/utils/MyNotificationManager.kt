@@ -22,7 +22,7 @@ class MyNotificationManager {
         const val MESSAGE_NOTIFICATION_CHANNEL_DESC =
             "Display notification for the message received."
         const val MESSAGE_NOTIFICATION_IMPORTANCE = NotificationManager.IMPORTANCE_HIGH
-        fun showMessageNotification(message: Message, name: String) {
+        fun showMessageNotification(message: Message, personName: String) {
             val intent = Intent(MainApplication.instance, UserExternalActionActivity::class.java)
                 .apply {
                     this.putExtra(
@@ -39,18 +39,18 @@ class MyNotificationManager {
                     )
                     this.putExtra(
                         UserExternalActionActivity.NEW_MESSAGE_PERSON_NAME,
-                        name
+                        personName
                     )
                     this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val pendingIntent = PendingIntent.getActivity(
                 MainApplication.instance,
-                0, intent, 0
+                System.currentTimeMillis().toInt(), intent, 0
             )
             val builder =
                 NotificationCompat.Builder(MainApplication.instance, MESSAGE_NOTIFICATION_CHANNEL)
                     .setSmallIcon(R.drawable.app_logo_white)
-                    .setContentTitle("New message from: $name")
+                    .setContentTitle("New message from: $personName")
                     .setContentText(message.text)
                     .setStyle(
                         NotificationCompat.BigTextStyle()

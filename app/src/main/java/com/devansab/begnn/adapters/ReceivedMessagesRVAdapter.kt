@@ -24,7 +24,7 @@ class ReceivedMessagesRVAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
         val lastMessage = lastMessagesList[position]
-        holder.tvName.text = "Anonymous"
+        holder.tvName.text = lastMessage.name
         holder.tvDate.text = lastMessage.message.time.toString()
         holder.tvMessage.text = lastMessage.message.text
     }

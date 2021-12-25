@@ -108,6 +108,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
     override fun onLastMessageClick(lastMessage: LastMessage) {
         val intent = Intent(requireContext(), UnknownUserChatActivity::class.java)
         intent.putExtra("userName", lastMessage.message.userName)
+        intent.putExtra("name", lastMessage.name)
         startActivity(intent)
     }
 }
