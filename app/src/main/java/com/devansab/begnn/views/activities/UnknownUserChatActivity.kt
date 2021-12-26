@@ -60,7 +60,6 @@ class UnknownUserChatActivity : AppCompatActivity() {
             viewModel.getAllMessagesOfUser(userName).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(it)
-                markMessagesAsRead()
             }
         }
     }
@@ -69,11 +68,17 @@ class UnknownUserChatActivity : AppCompatActivity() {
         if (list.isEmpty())
             return
 
+        if (chatList.size == list.size) {
+            adapter.notifyItemRangeChanged(0, chatList.size)
+            return
+        }
+
         val prePos = chatList.size
         val itemCount = list.size - prePos
         if (!populated) {
             chatList.addAll(list)
             populated = true
+            markMessagesAsRead()
         } else
             chatList.add(list[list.size - 1])
         adapter.notifyItemRangeInserted(prePos, itemCount)

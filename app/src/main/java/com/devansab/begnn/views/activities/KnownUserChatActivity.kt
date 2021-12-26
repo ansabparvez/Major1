@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.devansab.begnn.adapters.ChatRVAdapter
 import com.devansab.begnn.data.entities.Message
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.viewmodels.KnownUserChatViewModel
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -59,7 +61,7 @@ class KnownUserChatActivity : AppCompatActivity() {
             viewModel.getAllMessagesOfUser(userName, false).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(it)
-                markMessagesAsRead()
+                //markMessagesAsRead()
             }
         }
     }
@@ -68,11 +70,17 @@ class KnownUserChatActivity : AppCompatActivity() {
         if (list.isEmpty())
             return
 
+        if (chatList.size == list.size) {
+            adapter.notifyItemRangeChanged(0, chatList.size)
+            return
+        }
+
         val prePos = chatList.size
         val itemCount = list.size - prePos
         if (!populated) {
             chatList.addAll(list)
             populated = true
+            markMessagesAsRead()
         } else
             chatList.add(list[list.size - 1])
         adapter.notifyItemRangeInserted(prePos, itemCount)

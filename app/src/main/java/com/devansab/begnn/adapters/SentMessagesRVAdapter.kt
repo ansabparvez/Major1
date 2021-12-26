@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devansab.begnn.R
 import com.devansab.begnn.data.entities.LastMessage
+import com.devansab.begnn.utils.MainApplication
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +33,15 @@ class SentMessagesRVAdapter(
         calendar.timeInMillis = lastMessage.message.time
         val dateFormat = SimpleDateFormat("dd/mm/yyy", Locale.getDefault())
         holder.tvDate.text = dateFormat.format(calendar.time)
+
+        if (!lastMessage.message.read) {
+            holder.tvMessage.setTextColor(
+                ContextCompat.getColor(
+                    MainApplication.instance.applicationContext,
+                    R.color.color_text_dark
+                )
+            )
+        }
     }
 
     override fun getItemCount(): Int {
