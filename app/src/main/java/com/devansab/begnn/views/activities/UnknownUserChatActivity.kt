@@ -87,7 +87,8 @@ class UnknownUserChatActivity : AppCompatActivity() {
 
         val message = Message(
             UUID.randomUUID().toString(),
-            messageText, System.currentTimeMillis(), userName, sentByMe = true, isAnonymous = true
+            messageText, System.currentTimeMillis(), userName, sentByMe = true, isAnonymous = true,
+            read = true
         )
 
         etMessage.setText("")

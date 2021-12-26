@@ -86,8 +86,8 @@ class KnownUserChatActivity : AppCompatActivity() {
 
         val message = Message(
             UUID.randomUUID().toString(),
-            messageText, System.currentTimeMillis(), userName, sentByMe = true, isAnonymous = false
-        )
+            messageText, System.currentTimeMillis(), userName, sentByMe = true, isAnonymous = false,
+        read = true)
 
         etMessage.setText("")
         viewModel.viewModelScope.launch {
