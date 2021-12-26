@@ -60,6 +60,7 @@ class UnknownUserChatActivity : AppCompatActivity() {
             viewModel.getAllMessagesOfUser(userName).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(it)
+                markMessagesAsRead()
             }
         }
     }
@@ -77,6 +78,12 @@ class UnknownUserChatActivity : AppCompatActivity() {
             chatList.add(list[list.size - 1])
         adapter.notifyItemRangeInserted(prePos, itemCount)
         rvChat.scrollToPosition(chatList.size - 1)
+    }
+
+    private fun markMessagesAsRead() {
+        viewModel.viewModelScope.launch {
+            viewModel.markMessagesOfUserAsRead(userName)
+        }
     }
 
     private fun sendMessage() {

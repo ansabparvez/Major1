@@ -59,6 +59,7 @@ class KnownUserChatActivity : AppCompatActivity() {
             viewModel.getAllMessagesOfUser(userName, false).collect {
                 DebugLog.i("ansab", "chat size: ${it.size}")
                 displayChat(it)
+                markMessagesAsRead()
             }
         }
     }
@@ -78,6 +79,12 @@ class KnownUserChatActivity : AppCompatActivity() {
         rvChat.scrollToPosition(chatList.size - 1)
     }
 
+    private fun markMessagesAsRead() {
+        viewModel.viewModelScope.launch {
+            viewModel.markMessagesOfUserAsRead(userName)
+        }
+    }
+
     private fun sendMessage() {
         val etMessage = findViewById<EditText>(R.id.et_chat_message)
         val messageText = etMessage.text.toString().trim()
@@ -87,7 +94,8 @@ class KnownUserChatActivity : AppCompatActivity() {
         val message = Message(
             UUID.randomUUID().toString(),
             messageText, System.currentTimeMillis(), userName, sentByMe = true, isAnonymous = false,
-        read = true)
+            read = true
+        )
 
         etMessage.setText("")
         viewModel.viewModelScope.launch {

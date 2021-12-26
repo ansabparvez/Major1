@@ -19,4 +19,7 @@ interface MessageDao {
         "SELECT messages.*, name FROM users  JOIN (SELECT messages.* FROM messages WHERE isAnonymous = :isAnonymous ORDER BY time DESC) AS messages ON users.userName = messages.userName GROUP BY messages.userName"
     )
     fun getAllLastMessages(isAnonymous: Int): Flow<List<LastMessage>>
+
+    @Query("UPDATE messages SET read = 1 WHERE userName = :userName")
+    suspend fun markMessagesOfUserAsRead(userName: String)
 }

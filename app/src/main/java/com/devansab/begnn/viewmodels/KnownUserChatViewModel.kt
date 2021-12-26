@@ -17,4 +17,8 @@ class KnownUserChatViewModel(application: Application) : AndroidViewModel(applic
     suspend fun sendMessage(message: Message) {
         messageRepository.sendMessageToKnownUser(message)
     }
+
+    suspend fun markMessagesOfUserAsRead(userName: String){
+        messageRepository.markMessagesOfUserAsRead(userName)
+    }
 }

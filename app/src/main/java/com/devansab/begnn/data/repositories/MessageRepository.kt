@@ -113,6 +113,10 @@ class MessageRepository(private val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
+    suspend fun markMessagesOfUserAsRead(userName : String){
+        messageDao.markMessagesOfUserAsRead(userName)
+    }
+
     fun getAllLastMessages(isAnonymous: Int):
             Flow<List<LastMessage>> = messageDao.getAllLastMessages(isAnonymous)
 }

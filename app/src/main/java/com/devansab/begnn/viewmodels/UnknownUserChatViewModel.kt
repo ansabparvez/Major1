@@ -14,6 +14,9 @@ class UnknownUserChatViewModel(application: Application) : AndroidViewModel(appl
 
     suspend fun sendMessage(message: Message) {
         messageRepository.sendMessageToUnknownUser(message)
+    }
 
+    suspend fun markMessagesOfUserAsRead(userName: String){
+        messageRepository.markMessagesOfUserAsRead(userName)
     }
 }
