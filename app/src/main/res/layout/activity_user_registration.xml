@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/color_background"
                     android:digits="0,1,2,3,4,5,6,7,8,9,_,qwertzuiopasdfghjklyxcvbnm"
-                    android:hint="Create user name"
+                    android:hint="Create user name [a-z,0-9,_,-]"
                     android:paddingStart="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>

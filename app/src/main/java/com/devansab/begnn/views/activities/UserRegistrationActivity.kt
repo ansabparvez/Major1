@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -16,6 +19,8 @@ import com.devansab.begnn.utils.SharedPrefManager
 import com.devansab.begnn.viewmodels.UserRegistrationViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import es.dmoral.toasty.Toasty
+import android.text.Spanned
+
 
 @SuppressLint("SetTextI18n")
 class UserRegistrationActivity : AppCompatActivity() {
@@ -56,6 +61,33 @@ class UserRegistrationActivity : AppCompatActivity() {
         progressTitle = alertDialogLayout.findViewById(R.id.tv_lwpd_title)
         progressMessage = alertDialogLayout.findViewById(R.id.tv_lwpd_message)
         progressTitle.text = "Almost there..."
+
+        etUsername.addTextChangedListener(userNameTextWatcher)
+    }
+
+    private fun checkValidUserNameWhileTyping(userName: String) {
+        var newUserName = ""
+        for (char in userName) {
+            val charAscii = char.code
+            if (charAscii == 45 || charAscii == 95 || charAscii in 48..57 || charAscii in 97..122)
+                newUserName += char
+        }
+        etUsername.removeTextChangedListener(userNameTextWatcher)
+        etUsername.setText(newUserName)
+        etUsername.setSelection(newUserName.length)
+        etUsername.addTextChangedListener(userNameTextWatcher)
+    }
+
+    private val userNameTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            checkValidUserNameWhileTyping(s.toString())
+        }
     }
 
     private fun setUserNameAvailableObserver() {
@@ -105,7 +137,7 @@ class UserRegistrationActivity : AppCompatActivity() {
             return
         }
         if (name.length < 4) {
-            Toasty.error(this, "Enter at least 3 characters in name").show()
+            Toasty.error(this, "Enter at least 3 characters for name").show()
             return
         }
 
