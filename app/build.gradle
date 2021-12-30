@@ -31,6 +31,13 @@ android {
             keyAlias "key0"
             keyPassword "debugkey"
         }
+
+        release {
+            storeFile file("Keystores/release-keystore.jks")
+            storePassword "****"
+            keyAlias "key0"
+            keyPassword "****"
+        }
     }
 
     buildTypes {
@@ -45,6 +52,8 @@ android {
 
         release {
             minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
