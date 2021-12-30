@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3398148148148148" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/aa.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_chat_recv_msg.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_chat_send.xml" value="0.23778501628664495" />
@@ -14,28 +15,35 @@
         <entry key="app/src/main/res/drawable/ic_home_sent_messages_selected.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_home_settings.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/ic_home_settings_selected.xml" value="0.23778501628664495" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.21927083333333333" />
         <entry key="app/src/main/res/drawable/ic_sent_messages_person_search.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/selector_home_received_messages.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/selector_home_sent_messages.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/selector_home_settings_messages.xml" value="0.23778501628664495" />
+        <entry key="app/src/main/res/drawable/shape_rect_border_light_grey_color.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/drawable/shape_rect_clr_bkgnd.xml" value="0.23778501628664495" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_known_user_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22039473684210525" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_java.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_unknown_user_chat.xml" value="0.2299342105263158" />
+        <entry key="app/src/main/res/layout/activity_user_external_action.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/activity_user_registration.xml" value="0.22039473684210525" />
+        <entry key="app/src/main/res/layout/fragment_known_chat_last_msgs.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_received_messages.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_sent_messages.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2299342105263158" />
+        <entry key="app/src/main/res/layout/fragment_unknown_chat_last_msgs.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_list_chat.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_message_received.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/item_message_sent.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/layout_search_user.xml" value="0.2299342105263158" />
         <entry key="app/src/main/res/layout/layout_waiting_progress_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_home_bottom_nav.xml" value="0.2299342105263158" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21927083333333333" />
       </map>
     </option>
   </component>

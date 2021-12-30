@@ -21,4 +21,79 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_reMsg_toolbar"
         tools:listitem="@layout/item_list_chat" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_reMsg_noMessageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_reMsg_toolbar">
+
+        <TextView
+            android:id="@+id/tv_reMsg_noMsgTv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="You do not have any received messages.\n"
+            android:textAlignment="center"
+            android:textColor="@color/color_primary_dark"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_reMsg_noMsgTv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Do people know you are on BEGNN app?\nIt's the right time to share your username with others. Share now and start getting messages anonymously."
+            android:textAlignment="center"
+            android:textColor="@color/color_primary_dark"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_reMsg_noMsgTv1" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_reMsg_shareAnim"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reMsg_noMsgTv2"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/share_username_animation" />
+
+        <TextView
+            android:id="@+id/tv_reMsg_uNameCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@drawable/ic_copy"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="username"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_reMsg_shareUName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_reMsg_shareUName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/color_primary"
+            android:paddingVertical="15dp"
+            android:text="Share Now"
+            android:textColor="@color/color_background"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/lottie_reMsg_shareAnim"
+            app:layout_constraintStart_toStartOf="@id/lottie_reMsg_shareAnim" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_searchUser_userNameWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name is case sensitive"
+            android:textColor="@color/color_primary"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/ti_searchUser_userName"
+            app:layout_constraintTop_toBottomOf="@id/ti_searchUser_userName" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_searchUser_search"
             android:layout_width="wrap_content"
@@ -61,7 +71,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ti_searchUser_userName" />
+            app:layout_constraintTop_toBottomOf="@id/tv_searchUser_userNameWarning" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

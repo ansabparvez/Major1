@@ -3,25 +3,57 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
-
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
     compileSdk 31
 
+    def devVersion = "dev1.0"
+    def testVersion = "test1.0"
+    def prodVersion = "1.0"
+
     defaultConfig {
-        applicationId "com.devansab.major1"
+        applicationId "com.devansab.begnn"
         minSdk 24
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "${devVersion}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+
+        debug {
+            storeFile file("Keystores/debug.keystore")
+            storePassword "debugkey"
+            keyAlias "key0"
+            keyPassword "debugkey"
+        }
+
+        release {
+            storeFile file("Keystores/release-keystore.jks")
+            storePassword "****"
+            keyAlias "key0"
+            keyPassword "****"
+        }
+    }
+
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
             minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,19 +85,20 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     // Room architecture component dependencies
     //implementation 'androidx.room:room-runtime:2.4.0-beta02'
-    kapt 'androidx.room:room-compiler:2.4.0-beta02'
-    implementation 'androidx.room:room-ktx:2.4.0-beta02'
+    kapt 'androidx.room:room-compiler:2.4.0'
+    implementation 'androidx.room:room-ktx:2.4.0'
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
 
 
     //Google Play services
-    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:20.0.0'
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:28.4.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
 
@@ -80,6 +113,9 @@ dependencies {
 
     //Circular Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:4.2.2"
 }
 
 repositories {

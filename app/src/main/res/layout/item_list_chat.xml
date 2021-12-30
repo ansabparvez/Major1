@@ -5,13 +5,12 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="10dp"
     android:paddingTop="10dp">
-
+ 
     <TextView
         android:id="@+id/tv_listChat_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ansab Parvez"
-        android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="@color/text_heading"
         app:layout_constraintEnd_toStartOf="@id/tv_listChat_date"
