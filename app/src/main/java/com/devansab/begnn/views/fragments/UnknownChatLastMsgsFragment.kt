@@ -101,7 +101,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "My user name $userName")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "I am now on Begnn app. Search for $userName")
             startActivity(Intent.createChooser(shareIntent, "Share to"))
         }
     }
