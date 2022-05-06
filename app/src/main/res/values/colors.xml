@@ -15,14 +15,15 @@
 
     <color name="color_text_dark">#484949</color>
     <color name="color_text_light">#cececf</color>
+    <color name="text_heading">#000000</color>
+    <color name="text_sub_heading">#878484</color>
 
     <color name="color_toolbar_text">#fffefe</color>
     <color name="color_toolbar_background">#CB202E</color>
 
     <color name="color_bottom_nav_background">#CB202E</color>
 
-    <color name="text_heading">#000000</color>
-    <color name="text_sub_heading">#878484</color>
+    <color name="light_background">#E1DFDF</color>
 
 
 
