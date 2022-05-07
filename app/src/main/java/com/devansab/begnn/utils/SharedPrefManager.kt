@@ -65,4 +65,8 @@ class SharedPrefManager private constructor() {
     fun isUserRegistered(): Boolean {
         return sharedPreferences.getBoolean(KEY_USER_REGISTERED, false)
     }
+
+    fun clearData() {
+        sharedPreferences.edit().clear().apply()
+    }
 }
