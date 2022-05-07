@@ -87,7 +87,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
     }
 
     private fun setFindUserObserver() {
-        viewModel.getFindUserLiveData().observe(viewLifecycleOwner, {
+        viewModel.getFindUserLiveData().observe(viewLifecycleOwner) {
             if (it.success) {
                 val intent = Intent(requireActivity(), KnownUserChatActivity::class.java)
                 intent.putExtra("userName", it.user?.userName)
@@ -102,7 +102,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
             viewModel.resetFindUserLiveData()
             rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
                 .visibility = GONE
-        })
+        }
     }
 
     private fun displayLastMessages(messagesList: ArrayList<LastMessage>) {

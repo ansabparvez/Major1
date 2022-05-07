@@ -23,6 +23,7 @@ import com.devansab.begnn.adapters.ReceivedMessagesRVAdapter
 import com.devansab.begnn.data.entities.LastMessage
 import com.devansab.begnn.utils.Const.Companion.KEY_USER_UNAME
 import com.devansab.begnn.utils.MainApplication
+import com.devansab.begnn.utils.ShareProfileUtil
 import com.devansab.begnn.utils.SharedPrefManager
 import com.devansab.begnn.viewmodels.UnknownChatLastMsgsViewModel
 import com.devansab.begnn.views.activities.UnknownUserChatActivity
@@ -97,13 +98,7 @@ class UnknownChatLastMsgsFragment : Fragment(), ReceivedMessagesRVAdapter.LastMe
             Toasty.success(requireContext(), "Copied to clipboard").show()
         }
 
-        btnShareUserName.setOnClickListener {
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "I am now on Begnn app. Search for $userName")
-            startActivity(Intent.createChooser(shareIntent, "Share to"))
-        }
+        btnShareUserName.setOnClickListener { ShareProfileUtil.share(requireContext()) }
     }
 
     override fun onLastMessageClick(lastMessage: LastMessage) {
