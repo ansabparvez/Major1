@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.devansab.begnn.data.AppDatabase
@@ -17,6 +18,7 @@ import com.devansab.begnn.viewmodels.SettingsViewModel
 import com.devansab.begnn.views.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SettingsFragment : Fragment() {
@@ -66,33 +68,32 @@ class SettingsFragment : Fragment() {
     }
 
     private fun deleteAccount() {
-        viewModel.viewModelScope.launch {
-            viewModel.deleteUserProfile().collect {
-                when (it.type) {
-                    ApiResult.PROGRESS -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    ApiResult.SUCCESS -> {
-                        binding.progressBar.visibility = View.GONE
-                        FirebaseAuth.getInstance().currentUser!!.delete()
-                        SharedPrefManager.getInstance(requireContext()).clearData()
-                        viewModel.viewModelScope.launch {
-                            AppDatabase.getInstance(requireContext()).clearAllTables()
-                        }
 
-                        startActivity(Intent(requireContext(), MainActivity::class.java))
-                        requireActivity().finish()
-                    }
-                    else -> {
-                        binding.progressBar.visibility = View.GONE
-                        val error = it.error ?: "Some error. Try again later."
-                        Snackbar.make(requireContext(), binding.root, error, Snackbar.LENGTH_LONG)
-                            .show()
-                    }
+        viewModel.deleteUserProfile().observe(viewLifecycleOwner, Observer {
+            when (it.type) {
+                ApiResult.PROGRESS -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
+                ApiResult.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                    FirebaseAuth.getInstance().currentUser!!.delete()
+                    SharedPrefManager.getInstance(requireContext()).clearData()
+                    viewModel.viewModelScope.launch {
+                        AppDatabase.getInstance(requireContext()).clearAllTables()
+                    }
 
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    requireActivity().finish()
+                }
+                else -> {
+                    binding.progressBar.visibility = View.GONE
+                    val error = it.error ?: "Some error. Try again later."
+                    Snackbar.make(requireContext(), binding.root, error, Snackbar.LENGTH_LONG)
+                        .show()
+                }
             }
-        }
+
+        })
     }
 
     private fun initLogout() {
@@ -101,7 +102,7 @@ class SettingsFragment : Fragment() {
             .setMessage("Are you sure you want to logout? This will delete all your chats.")
             .setPositiveButton("Logout") { _, _ ->
                 SharedPrefManager.getInstance(requireContext()).clearData()
-                viewModel.viewModelScope.launch {
+                viewModel.viewModelScope.launch(Dispatchers.IO) {
                     AppDatabase.getInstance(requireContext()).clearAllTables()
                 }
                 FirebaseAuth.getInstance().signOut()

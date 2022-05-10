@@ -284,8 +284,9 @@ class UserRepository(val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    fun deleteUserProfile(): Flow<ApiResult<Boolean>> = callbackFlow {
-        send(ApiResult(ApiResult.PROGRESS))
+    fun deleteUserProfile(): LiveData<ApiResult<Boolean>> {
+        val data = MutableLiveData<ApiResult<Boolean>>()
+        data.postValue(ApiResult(ApiResult.PROGRESS))
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/deleteAccount"
         val jsonObjectRequest: JsonObjectRequest =
@@ -293,10 +294,10 @@ class UserRepository(val application: Application) {
                 Method.POST, url, null,
                 Response.Listener {
                     val success = it.getBoolean("success")
-                    trySend(ApiResult(ApiResult.SUCCESS, success))
+                    data.value = ApiResult(ApiResult.SUCCESS, success)
                 },
                 Response.ErrorListener {
-                    trySend(ApiResult(ApiResult.ERROR, error = it.localizedMessage))
+                    data.value = ApiResult(ApiResult.ERROR, error = it.localizedMessage)
                 }
             ) {
                 override fun getBodyContentType(): String {
@@ -313,6 +314,7 @@ class UserRepository(val application: Application) {
                 }
             }
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
+        return data
     }
 
 }
