@@ -9,14 +9,14 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.devansab.begnn.data.AppDatabase
 import com.devansab.begnn.data.daos.UserDao
 import com.devansab.begnn.data.entities.User
-import com.devansab.begnn.utils.Const
-import com.devansab.begnn.utils.DebugLog
-import com.devansab.begnn.utils.MainApplication
-import com.devansab.begnn.utils.SharedPrefManager
+import com.devansab.begnn.utils.*
+import com.google.android.gms.common.api.Api
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.HashMap
@@ -270,6 +270,37 @@ class UserRepository(val application: Application) {
 
                 override fun getBody(): ByteArray {
                     return JSONObject(userData as Map<String, String>).toString().toByteArray()
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    val authToken = SharedPrefManager.getInstance(application).getAuthToken()
+                    params["Authorization"] = "Bearer $authToken"
+                    params["Content-Type"] = "application/json"
+                    return params
+                }
+            }
+        MainApplication.instance.addToRequestQueue(jsonObjectRequest)
+    }
+
+    fun deleteUserProfile(): Flow<ApiResult<Boolean>> = callbackFlow {
+        send(ApiResult(ApiResult.PROGRESS))
+        val url =
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/deleteAccount"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(
+                Method.POST, url, null,
+                Response.Listener {
+                    val success = it.getBoolean("success")
+                    trySend(ApiResult(ApiResult.SUCCESS, success))
+                },
+                Response.ErrorListener {
+                    trySend(ApiResult(ApiResult.ERROR, error = it.localizedMessage))
+                }
+            ) {
+                override fun getBodyContentType(): String {
+                    return "application/json"
                 }
 
                 @Throws(AuthFailureError::class)
