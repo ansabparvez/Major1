@@ -8,4 +8,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     private val userRepo by lazy { UserRepository(application) }
 
+    fun deleteUserProfile() = userRepo.deleteUserProfile()
+
 }
