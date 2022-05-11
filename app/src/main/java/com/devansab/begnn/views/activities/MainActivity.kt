@@ -8,6 +8,7 @@ import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.devansab.begnn.viewmodels.MainViewModel
 import com.devansab.begnn.R
+import com.devansab.begnn.utils.Const.Companion.DEEPLINK_SEARCH_USER
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.utils.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
@@ -101,6 +102,17 @@ class MainActivity : AppCompatActivity() {
                 .getInstance(application)
         )[MainViewModel::class.java]
 
+        val data = intent.data
+        var searchUserName: String? = null
+        if (data != null) {
+            if (data.toString().contains("begnn/?user=")) {
+                val array = data.toString().split("=")
+                searchUserName = array[1]
+            }
+        }
+
+        DebugLog.i("ansabLog", "usr name is $searchUserName")
+
         //FirebaseAuth.getInstance().signOut()
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
@@ -110,13 +122,14 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         }
-        DebugLog.i(this, "user is not null")
 
         //viewModel.isUserRegistered()
 
         if (SharedPrefManager.getInstance(this).isUserRegistered()) {
             DebugLog.i(this, "user is registered")
             val intent = Intent(this, HomeActivity::class.java)
+            if (searchUserName != null)
+                intent.putExtra(DEEPLINK_SEARCH_USER, searchUserName)
             startFinalActivity(intent)
         } else {
             DebugLog.i(this, "user is not registered")

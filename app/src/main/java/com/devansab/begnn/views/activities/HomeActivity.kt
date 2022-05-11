@@ -3,6 +3,7 @@ package com.devansab.begnn.views.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.devansab.begnn.R
+import com.devansab.begnn.utils.Const.Companion.DEEPLINK_SEARCH_USER
 import com.devansab.begnn.utils.DebugLog
 import com.devansab.begnn.views.fragments.UnknownChatLastMsgsFragment
 import com.devansab.begnn.views.fragments.KnownChatLastMsgsFragment
@@ -26,8 +27,11 @@ class HomeActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav_home_nav)
         bottomNav.itemIconTintList = null
 
+        var searchUser: String? = null
+        if (intent.hasExtra(DEEPLINK_SEARCH_USER))
+            searchUser = intent.getStringExtra(DEEPLINK_SEARCH_USER)
 
-        val frag = KnownChatLastMsgsFragment()
+        val frag = KnownChatLastMsgsFragment(searchUser = searchUser)
         supportFragmentManager.beginTransaction().replace(
             R.id.frameLayout_home_frame,
             frag

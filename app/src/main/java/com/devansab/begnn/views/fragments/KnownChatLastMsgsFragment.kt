@@ -29,9 +29,15 @@ import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageClickListener {
+class KnownChatLastMsgsFragment(val searchUser: String? = null) : Fragment(),
+    SentMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View
-    private lateinit var viewModel: KnownChatLastMsgsViewModel
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(MainApplication.instance)
+        )[KnownChatLastMsgsViewModel::class.java]
+    }
     private lateinit var alertDialog: AlertDialog
 
     override fun onCreateView(
@@ -45,16 +51,17 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         return rootView
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (searchUser != null)
+            findUser(searchUser)
+    }
+
     private fun initViews() {
         val toolbar: Toolbar? = rootView.findViewById(R.id.toolbar_sentMsg_toolbar)
         rootView.findViewById<FloatingActionButton>(R.id.fab_sentMsg_findUser)
             .setOnClickListener { showFindUserPopUp() }
         toolbar?.title = "People I Know"
-
-        viewModel = ViewModelProvider(
-            this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(MainApplication.instance)
-        )[KnownChatLastMsgsViewModel::class.java]
 
         viewModel.viewModelScope.launch {
             viewModel.getAllUnAnonymousLastMessages().collect {
@@ -74,15 +81,21 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         buildUserSearchAlertDialog()
 
         alertDialog.show()
-        val etSearchUserName = alertDialog?.findViewById<EditText>(R.id.et_searchUser_userName)
-        val btnSearchUser = alertDialog?.findViewById<Button>(R.id.btn_searchUser_search)
+        val etSearchUserName = alertDialog.findViewById<EditText>(R.id.et_searchUser_userName)
+        val btnSearchUser = alertDialog.findViewById<Button>(R.id.btn_searchUser_search)
 
         setFindUserObserver()
         btnSearchUser?.setOnClickListener {
-            viewModel.findUser(etSearchUserName?.text.toString())
             alertDialog.cancel()
-            rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
-                .visibility = VISIBLE
+            findUser(etSearchUserName?.text.toString())
+        }
+    }
+
+    private fun findUser(userName: String) {
+        rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
+            .visibility = VISIBLE
+        viewModel.viewModelScope.launch {
+            viewModel.findUser(userName)
         }
     }
 
@@ -110,7 +123,7 @@ class KnownChatLastMsgsFragment : Fragment(), SentMessagesRVAdapter.LastMessageC
         val rvLastMessages = rootView.findViewById<RecyclerView>(R.id.rv_sentMsg_chatPreview)
         if (messagesList.size == 0) {
             rootView.findViewById<ConstraintLayout>(R.id.constraintLayout_sentMsg_noMessage)
-                .visibility = View.VISIBLE
+                .visibility = VISIBLE
             rootView.findViewById<Button>(R.id.btn_sentMsg_searchUser)
                 .setOnClickListener { showFindUserPopUp() }
             rvLastMessages.visibility = GONE
