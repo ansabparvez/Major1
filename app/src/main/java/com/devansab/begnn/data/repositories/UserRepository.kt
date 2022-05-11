@@ -1,6 +1,7 @@
 package com.devansab.begnn.data.repositories
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.AuthFailureError
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
@@ -155,14 +157,23 @@ class UserRepository(val application: Application) {
         MainApplication.instance.addToRequestQueue(jsonObjectRequest)
     }
 
-    fun findUser(userName: String) {
+    suspend fun findUser(userName: String) {
+        val user = userDao.getUserByUsername(userName)
+        DebugLog.i("ansabLog", "user in local $user")
+        if (user == null)
+            findUserFromServer(userName)
+        else
+            findUserLiveData.postValue(FindUserModel(true, null, user))
+    }
+
+    private fun findUserFromServer(userName: String) {
         val url =
             "https://us-central1-begnn-app.cloudfunctions.net/userV1/findUser?userName=$userName"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
                 Method.GET, url, null,
                 Response.Listener { response ->
-                    DebugLog.i("ansab", "response: ($response.toString())")
+                    DebugLog.i("ansabLog", "response: ($response.toString())")
                     if (response.getBoolean("success")) {
                         val user = User(
                             response.getString("userName"),
@@ -176,7 +187,9 @@ class UserRepository(val application: Application) {
                         )
                     }
                 },
-                Response.ErrorListener { }
+                Response.ErrorListener {
+                    DebugLog.i("ansabLog", "find user api error: ${it.message}")
+                }
             ) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
@@ -288,22 +301,19 @@ class UserRepository(val application: Application) {
         val data = MutableLiveData<ApiResult<Boolean>>()
         data.postValue(ApiResult(ApiResult.PROGRESS))
         val url =
-            "https://us-central1-begnn-app.cloudfunctions.net/userV1/deleteAccount"
+            "https://us-central1-begnn-app.cloudfunctions.net/userV1/deleteUser"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
-                Method.POST, url, null,
+                Method.GET, url, null,
                 Response.Listener {
                     val success = it.getBoolean("success")
                     data.value = ApiResult(ApiResult.SUCCESS, success)
                 },
                 Response.ErrorListener {
+                    Log.i("ansabLog", "api failed ${it.message}")
                     data.value = ApiResult(ApiResult.ERROR, error = it.localizedMessage)
                 }
             ) {
-                override fun getBodyContentType(): String {
-                    return "application/json"
-                }
-
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()

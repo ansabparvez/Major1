@@ -15,7 +15,7 @@ class KnownChatLastMsgsViewModel(application: Application) : AndroidViewModel(ap
     private val userRepository = UserRepository(application)
     private val messageRepository = MessageRepository(application)
 
-    fun findUser(userName: String) {
+    suspend fun findUser(userName: String) {
         DebugLog.i(this, "user to search: $userName")
         userRepository.findUser(userName)
     }
