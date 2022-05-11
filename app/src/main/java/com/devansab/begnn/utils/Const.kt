@@ -6,5 +6,6 @@ class Const {
         const val KEY_USER_NAME = "keyUserName"
         const val KEY_USER_UNAME = "keyUserUName"
         const val KEY_USER_ANON_ID = "keyUserAnonId"
+        const val DEEPLINK_SEARCH_USER = "deeplinkSearchUser"
     }
 }
