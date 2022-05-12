@@ -29,7 +29,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class KnownChatLastMsgsFragment(val searchUser: String? = null) : Fragment(),
+class KnownChatLastMsgsFragment(var searchUser: String? = null) : Fragment(),
     SentMessagesRVAdapter.LastMessageClickListener {
     private lateinit var rootView: View
     private val viewModel by lazy {
@@ -53,8 +53,10 @@ class KnownChatLastMsgsFragment(val searchUser: String? = null) : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        if (searchUser != null)
-            findUser(searchUser)
+        if (searchUser != null) {
+            findUser(searchUser!!)
+            searchUser = null
+        }
     }
 
     private fun initViews() {
@@ -84,7 +86,6 @@ class KnownChatLastMsgsFragment(val searchUser: String? = null) : Fragment(),
         val etSearchUserName = alertDialog.findViewById<EditText>(R.id.et_searchUser_userName)
         val btnSearchUser = alertDialog.findViewById<Button>(R.id.btn_searchUser_search)
 
-        setFindUserObserver()
         btnSearchUser?.setOnClickListener {
             alertDialog.cancel()
             findUser(etSearchUserName?.text.toString())
@@ -92,6 +93,7 @@ class KnownChatLastMsgsFragment(val searchUser: String? = null) : Fragment(),
     }
 
     private fun findUser(userName: String) {
+        setFindUserObserver()
         rootView.findViewById<LottieAnimationView>(R.id.lottie_sentMsg_animation_searchUser)
             .visibility = VISIBLE
         viewModel.viewModelScope.launch {

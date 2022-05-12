@@ -188,6 +188,10 @@ class UserRepository(val application: Application) {
                     }
                 },
                 Response.ErrorListener {
+                    findUserLiveData.value = FindUserModel(
+                        false,
+                        "Network error"
+                    )
                     DebugLog.i("ansabLog", "find user api error: ${it.message}")
                 }
             ) {
